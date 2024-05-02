@@ -296,7 +296,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									ps.outputChatBox(
 										`${CONFIG.orange}* [In car] ${player.characterName} ${
 											CONFIG.grey
-										}says:!{white} ${
+										}!{white} ${
 											message[0].toUpperCase() + message.slice(1)
 										}`
 									);
@@ -305,7 +305,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									ps.outputChatBox(
 										`${CONFIG.orange}* [In car] ${localPlayerName} !{#c0b3ef}#${
 											player.id
-										} ${CONFIG.grey}says:!{white} ${
+										} ${CONFIG.grey}!{white} ${
 											message[0].toUpperCase() + message.slice(1)
 										}`
 									);
@@ -535,7 +535,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 										ps,
 										"fa-solid fa-dice",
 										"#66d0fa",
-										`!{white}${player.characterName} !{#c0b3ef}#${player.id}!{white} rolled a ${value} sided dice and scored a ${dice}!`
+										`!{white}${player.characterName} !{#00000}${player.characterName}!{white} rolled a ${value} sided dice and scored a ${dice}!`
 									);
 									return;
 								}
@@ -552,7 +552,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 										player,
 										"fa-solid fa-dice",
 										"#66d0fa",
-										`!{white}${localPlayerName} !{#c0b3ef}#${player.id}!{white} rolled a ${value} sided dice and scored a ${dice}!`
+										`!{white}${localPlayerName} !{#00000}${player.characterName}!{white} rolled a ${value} sided dice and scored a ${dice}!`
 									);
 								}
 							}
@@ -582,7 +582,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 								}
 								if (ps.adminDuty) {
 									ps.outputChatBox(
-										`!{#ff9cf2}* ${player.characterName} !{#c0b3ef}#${player.id}!{#ff9cf2} ${message}`
+										`!{#ff9cf2}* ${player.characterName} !{#00000}${player.characterName}!{#ff9cf2} ${message}`
 									);
 									return;
 								}
@@ -593,7 +593,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 								}
 								if (ps.id != player.id) {
 									ps.outputChatBox(
-										`!{#ff9cf2}* ${localPlayerName} !{#c0b3ef}#${player.id}!{#ff9cf2} ${message}`
+										`!{#ff9cf2}* ${localPlayerName} !{#00000}${player.characterName}!{#ff9cf2} ${message}`
 									);
 								}
 							}
@@ -623,7 +623,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 								}
 								if (ps.adminDuty) {
 									ps.outputChatBox(
-										`!{#ff9cf2}* ${message} ( ${player.characterName} !{#c0b3ef}#${player.id}!{#ff9cf2} )`
+										`!{#ff9cf2}* ${message} ( ${player.characterName} !{#00000}${player.characterName}!{#ff9cf2} )`
 									);
 									return;
 								}
@@ -634,7 +634,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 								}
 								if (ps.id != player.id) {
 									ps.outputChatBox(
-										`!{#ff9cf2}* ${message} ( ${localPlayerName} !{#c0b3ef}#${player.id}!{#ff9cf2} )`
+										`!{#ff9cf2}* ${message} ( ${localPlayerName} !{#00000}${player.characterName}!{#ff9cf2} )`
 									);
 								}
 							}
@@ -739,7 +739,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 								);
 								mp.chat.pmgreen(
 									ps,
-									`!{#a4faa2}PM From ${localPlayerName} !{#c0b3ef}#${player.id}!{#919191}: !{#919191}((!{white} ${message} !{#919191}))  ((!{#fff652} Use: /pmb [message] to respond !{#919191}))`
+									`!{#a4faa2}PM From ${localPlayerName} !{#00000}${player.characterName}!{#919191}: !{#919191}((!{white} ${message} !{#919191}))  ((!{#fff652} Use: /pmb [message] to respond !{#919191}))`
 								);
 								ps.setVariable("lastPm", player.characterId);
 							}
@@ -997,7 +997,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 								if (ps.getVariable("loggedIn") == true) {
 									mp.chat.quit(
 										ps,
-										`!{white}Player !{#c0b3ef}#${player.id}!{white} has !{red}logged out!{white} to authentication.!{white}`
+										`!{white}Player !{#00000}${player.characterName}!{white} has !{red}logged out!{white} to authentication.!{white}`
 									);
 								}
 							}
@@ -1551,14 +1551,12 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 													player.emergencyCall || player.emergencyService
 														? "!{grey}[Phone]!{white}"
 														: ""
-												} ${player.characterName} ${
-													CONFIG.grey
-												}says:!{white} ${message}`
+												} ${player.characterName}:!{white} ${message}`
 											);
 										}
 										if (ps.adminDuty) {
 											ps.outputChatBox(
-												`${player.characterName} !{#c0b3ef}#${player.id} ${CONFIG.grey}says:!{white} ${message}`
+												`${player.characterName} !{#00000}${player.characterName} ${CONFIG.grey}says:!{white} ${message}`
 											);
 											return;
 										}
@@ -1571,8 +1569,8 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 															: ""
 													} !{#8c8c8c}${
 														localPlayerName === "Player"
-															? `Player !{#c0b3ef}#${player.id} ${CONFIG.grey}says:!{white} ${message}`
-															: `${localPlayerName} !{#c0b3ef}#${player.id} ${CONFIG.grey}says:!{white} ${message}`
+															? `${player.characterName}:!{white} ${message}`
+															: `${player.characterName}:!{white} ${message}`
 													}`
 												);
 											} else if (ps.dist(player.position) >= 10) {
@@ -1583,8 +1581,8 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 															: ""
 													} !{#b8b8b8}${
 														localPlayerName === "Player"
-															? `Player !{#c0b3ef}#${player.id} ${CONFIG.grey}says:!{white} ${message}`
-															: `${localPlayerName} !{#c0b3ef}#${player.id} ${CONFIG.grey}says:!{white} ${message}`
+															? `${player.characterName}:!{white} ${message}`
+															: `${player.characterName}:!{white} ${message}`
 													}`
 												);
 												return;
@@ -1596,8 +1594,8 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 															: ""
 													} ${
 														localPlayerName === "Player"
-															? `Player !{#c0b3ef}#${player.id} ${CONFIG.grey}says:!{white} ${message}`
-															: `${localPlayerName} !{#c0b3ef}#${player.id} ${CONFIG.grey}says:!{white} ${message}`
+															? `${player.characterName}:!{white} ${message}`
+															: `${player.characterName}:!{white} ${message}`
 													}`
 												);
 											}

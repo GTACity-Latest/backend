@@ -18,7 +18,7 @@ const CONFIG = {
   server: '!{#dc143c}GTACity:!{white} ',
   green: '!{#78cc78}',
   blue: '!{#6dbce6}',
-  grey: '!{#919191}',
+  grey: '!{#00000}',
   faction: '!{#ffbf47}',
   vip: '!{#FFD700}[Vip]!{white} ',
   credits: '!{#FFD700}[Credits]!{white} ',
