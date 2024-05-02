@@ -10,31 +10,11 @@ class clothingStores {
                 const { clothing_stores } = require('../models')
                 clothing_stores.findAll({
                     benchmark: true,
-                    logging: (sql, timingMs) => mp.log(`${CONFIG.consoleGreen}[GTACity - KIYAFET MAĞAZASI]${CONFIG.consoleWhite} Tüm kıyafetler yüklendi [Yürütüldü ${timingMs} ms]`),
+                    logging: (sql, timingMs) => mp.log(`${CONFIG.consoleGreen}[CLOTHING SHOPS]${CONFIG.consoleWhite} Loaded all clothing shops into the server [Executed in ${timingMs} ms]`),
                 }).then((clothesShops) => {
                     if (clothesShops.length > 0) {
                         clothesShops.forEach((shop) => {
-                            mp.labels.new(`~c~'~w~Y~c~'~w~ tuşuna basın. Kıyafet Mağazası: ${shop.clothingName} ID: ${shop.id}`, new mp.Vector3(JSON.parse(shop.position)),
-                                {
-                                    font: 4,
-                                    drawDistance: 30,
-                                    color: [255, 0, 0, 255],
-                                    dimension: 0
-                                });
-                            mp.blips.new(73, new mp.Vector3(JSON.parse(shop.position)),
-                                {
-                                    name: shop.shopName,
-                                    color: 63,
-                                    shortRange: true,
-                                });
-                            let staticPed = mp.peds.new(mp.joaat('csb_anita'), new mp.Vector3(JSON.parse(shop.position)),
-                                {
-                                    dynamic: false,
-                                    frozen: true,
-                                    invincible: true
-                                });
-                            var shopCol = mp.colshapes.newRectangle(JSON.parse(shop.position).x, JSON.parse(shop.position).y, 7, 7, 0)
-                            this.colShapeMngr.push(shopCol)
+
                         })
                     }
                 })
@@ -43,7 +23,7 @@ class clothingStores {
                 this.colShapeMngr.forEach((shop) => {
                     if (shop == shape) {
                         player.setVariable('inClothingStore', true);
-                        player.call('requestBrowser', [`gui.notify.showNotification("'Y' tuşuna basarak etkileşime geçin.", true, false, false, 'fa-solid fa-circle-info')`])
+                        player.call('requestBrowser', [`gui.notify.showNotification("Press 'Y' to interact with clothing store.", true, false, false, 'fa-solid fa-circle-info')`])
                     }
                 })
             },
@@ -62,12 +42,12 @@ class clothingStores {
                 })
             },
             'clothingChange:sync': async (player, cid, draw, texture) => {
-                if(cid == 11) {
+                if (cid == 11) {
                     const torsoDataMale = require('./torsoDataM.json');
                     const torsoDataFemale = require('./torsoDataF.json');
                     const models = [mp.joaat('mp_m_freemode_01'), mp.joaat('mp_f_freemode_01')]
                     if (player.model == models[0]) {
-                        if(torsoDataMale[draw] === undefined || torsoDataMale[draw][texture] === undefined) {
+                        if (torsoDataMale[draw] === undefined || torsoDataMale[draw][texture] === undefined) {
                             return;
                         } else {
                             mp.players.forEachInRange(player.position, 200,
@@ -76,8 +56,8 @@ class clothingStores {
                                     ps.call('setEntComponents', [player, cid, draw, texture])
                                 })
                         }
-                    } else if(player.model == models[1]) {
-                        if(torsoDataFemale[draw] === undefined || torsoDataFemale[draw][texture] === undefined) {
+                    } else if (player.model == models[1]) {
+                        if (torsoDataFemale[draw] === undefined || torsoDataFemale[draw][texture] === undefined) {
                             return;
                         } else {
                             mp.players.forEachInRange(player.position, 200,
@@ -87,7 +67,7 @@ class clothingStores {
                                 })
                         }
                     }
-                } else if(cid != 11) {
+                } else if (cid != 11) {
                     mp.players.forEachInRange(player.position, 200,
                         async (ps) => {
                             ps.call('setEntComponents', [player, cid, draw, texture])
@@ -111,7 +91,7 @@ class clothingStores {
                                 player_clothes.update({
                                     data: data
                                 }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("Yeni bir maske satın aldın $300 karşılığında", false, true, 3000, 'fa-solid fa-circle-info')`])
+                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new mask for $300", false, true, 3000, 'fa-solid fa-circle-info')`])
                                     mp.events.call('player:setClothing', player)
                                 })
                                 break;
@@ -121,7 +101,7 @@ class clothingStores {
                                 player_clothes.update({
                                     data: data
                                 }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("$50 karşılığında gövde satın aldın.", false, true, 3000, 'fa-solid fa-circle-info')`])
+                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new Torso item for $50", false, true, 3000, 'fa-solid fa-circle-info')`])
                                     mp.events.call('player:setClothing', player)
                                 })
                                 break;
@@ -131,7 +111,7 @@ class clothingStores {
                                 player_clothes.update({
                                     data: data
                                 }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("Bacak satın aldın $200 karşılığında", false, true, 3000, 'fa-solid fa-circle-info')`])
+                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new Leg item for $200", false, true, 3000, 'fa-solid fa-circle-info')`])
                                     mp.events.call('player:setClothing', player)
                                 })
                                 break;
@@ -141,7 +121,7 @@ class clothingStores {
                                 player_clothes.update({
                                     data: data
                                 }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("Çanta satın aldın $600 karşılığında", false, true, 3000, 'fa-solid fa-circle-info')`])
+                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new bag item for $600", false, true, 3000, 'fa-solid fa-circle-info')`])
                                     mp.events.call('player:setClothing', player)
                                 })
                                 break;
@@ -151,7 +131,7 @@ class clothingStores {
                                 player_clothes.update({
                                     data: data
                                 }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("Ayakkabı satın aldın $600 karşılığında", false, true, 3000, 'fa-solid fa-circle-info')`])
+                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new shoe item for $600", false, true, 3000, 'fa-solid fa-circle-info')`])
                                     mp.events.call('player:setClothing', player)
                                 })
                                 break;
@@ -161,7 +141,7 @@ class clothingStores {
                                 player_clothes.update({
                                     data: data
                                 }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("Aksesuar eşyası satın aldın $1900 karşılığında", false, true, 3000, 'fa-solid fa-circle-info')`])
+                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new accessory item for $1900", false, true, 3000, 'fa-solid fa-circle-info')`])
                                     mp.events.call('player:setClothing', player)
                                 })
                                 break;
@@ -194,20 +174,46 @@ class clothingStores {
             },
         })
 
-        mp.cmds.add(['clothing'], async(player, name) => {
-            if(!name) return mp.chat.info(player, `Use: /clothing [name]`);
-            if(player.isAdmin > 7) {
-                db.clothing_stores.create({
+        mp.cmds.add(['clothing'], async (player, name) => {
+            if (!name) return mp.chat.info(player, `Use: /clothing [name]`);
+            if (player.isAdmin > 7) {
+                let shop = await db.clothing_stores.create({
                     OwnerId: player.characterId,
                     clothingName: name,
                     moneyAmount: 0,
                     items: "[]",
                     lastRobbery: 0,
                     position: JSON.stringify(player.position)
-                }).catch((err) => {mp.log(err)});
-                mp.chat.aPush(player, `Yeni bir kıyafet dükkanı oluşturdum ${name}`);
+                });
+
+                this.loadShop(shop);
+                mp.chat.aPush(player, `Created new clothing store with name ${name} id ${shop.id}`);
             }
-        })
+        });
+    }
+
+    loadShop(shop) {
+        mp.labels.new(`~c~'~w~Y~c~'~w~ to interact. Clothing Store: ${shop.clothingName} ID: ${shop.id}`, new mp.Vector3(JSON.parse(shop.position)),
+            {
+                font: 4,
+                drawDistance: 30,
+                color: [255, 0, 0, 255],
+                dimension: 0
+            });
+        mp.blips.new(73, new mp.Vector3(JSON.parse(shop.position)),
+            {
+                name: shop.shopName,
+                color: 63,
+                shortRange: true,
+            });
+        let staticPed = mp.peds.new(mp.joaat('csb_anita'), new mp.Vector3(JSON.parse(shop.position)),
+            {
+                dynamic: false,
+                frozen: true,
+                invincible: true
+            });
+        var shopCol = mp.colshapes.newRectangle(JSON.parse(shop.position).x, JSON.parse(shop.position).y, 7, 7, 0)
+        this.colShapeMngr.push(shopCol)
     }
 }
 new clothingStores()
