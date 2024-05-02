@@ -1,7 +1,7 @@
 let chatAllowed = true;
 
 if (mp.storage.data.timeStamp === undefined)
-    mp.storage.data.timeStamp = false;
+    mp.storage.data.timeStamp = true;
 if (mp.storage.data.pageSize === undefined)
     mp.storage.data.pageSize = 18;
 if (mp.storage.data.fontSize === undefined)

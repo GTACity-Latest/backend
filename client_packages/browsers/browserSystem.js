@@ -262,8 +262,15 @@ class browserSystem {
         mp.keys.bind(120, false, function() {
             let istyping = mp.players.local.isTypingInTextChat;
             let islogged = mp.players.local.getVariable('loggedIn');
-            if(islogged && !istyping && !mp.game.ui.isPauseMenuActive() && !mp.players.local.phoneStatus) {
+            if(islogged && !istyping) {
                 mp.events.callRemote('staff:reports');
+            }
+        })
+		
+		mp.keys.bind(116, false, function() {
+            let islogged = mp.players.local.getVariable('loggedIn');
+            if(islogged) {
+                mp.events.callRemote('phone:dialcity');
             }
         })
 
@@ -372,7 +379,7 @@ z
             browserRoute = route;
         }
         if(cursor) {mp.gui.cursor.show(true, true);}
-        if(chat) { mp.events.call('requestBrowser', `appSys.commit('chatActive', false)`) }
+        if(chat) { mp.events.call('requestBrowser', `appSys.commit('chatActive', true)`) }
     }
 
 }

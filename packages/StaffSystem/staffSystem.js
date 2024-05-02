@@ -2424,6 +2424,12 @@ mp.events.add({
             })
         }
     },
+	
+'phone:dialcity': async (player) => {
+    player.call('requestRoute', ['phone', true, true]);
+    player.call('requestBrowser', [`appSys.commit('phonexd')`])
+},
+
     'endAjail': async (player) => {
         const { Accounts } = require('../models')
         Accounts.update({
