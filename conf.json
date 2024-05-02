@@ -1,0 +1,14 @@
+{
+    "announce": true,
+    "allow-cef-debugging": true,
+    "gamemode": "roleplay",
+    "name": "ahmet kayanin aglama gunlugu",
+    "url": "https://discord.gg/ahmetkaya",
+    "maxplayers": 2000,
+    "language": "tr",
+    "enable-nodejs": true,
+    "port": 22005,
+    "stream-distance": 700.0,
+    "voice-chat": true,
+    "voice-chat-sample-rate": 48000
+}
