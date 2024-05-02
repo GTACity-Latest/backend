@@ -215,7 +215,6 @@ mp.events.add({
           const { characters } = require('../models');
           characters.findAll({
             benchmark: true,
-            logging: (sql, timingMs) => mp.chat.server(player, `Loaded in ${timingMs}ms`),
             where: { cName: name }
           }).then(async (char) => {
             if (char.length > 0) {
@@ -235,7 +234,7 @@ mp.events.add({
               player.setVariable('thirstAmount', player.thirst);
               player.setVariable('hungerAmount', player.hunger);
               player.characterName = char[0].cName.replace('_', ' ')
-              mp.log(`${CONFIG.consolePurple}[AUTH]${CONFIG.consoleWhite} Character ${player.characterName} has been loaded successfully.`)
+              mp.log(`${CONFIG.consolePurple}[GTACity Yetkilendirme]${CONFIG.consoleWhite} Karakter ${player.characterName} başarıyla yüklendi.`)
               player.health = parseInt(char[0].health)
               player.armour = parseInt(char[0].armour)
               player.factionFirst = char[0].factionOne
@@ -265,7 +264,7 @@ mp.events.add({
               player.setVariable('characterName', player.characterName)
               player.setVariable('adminName', player.adminName);
               player.dimension = 0
-              mp.chat.server(player, `!{green}GTACity'e tekrardan hoş geldin !{#dcabff}${player.name}! /yardim kullanarak tüm komutları görüntüleyebilirsin {red}.`)
+              mp.chat.server(player, `!{green}GTACity'e tekrardan hoş geldin !{#dc143c}${player.name}! /yardim kullanarak tüm komutları görüntüleyebilirsin.`)
               mp.chat.server(player, '!{red}GTACity V0.0.1 - We just started.')
               if (player.isAdmin > 0) {
                 mp.chat.staffMsg(player, `Yönetime hoş geldin, !{${player.adminColour}}${player.adminSt}!{white} ${player.adminName}!{white}`)
@@ -659,7 +658,7 @@ async function loadAccount(player, username) {
       getRef(player, rows[0].id);
       Accounts.update({ uuid: player.uuid, lastIP: player.ip, HWID: player.serial, socialClub: player.socialClub, socialClubId: player.rgscId }, { where: { username: username } }).catch((err) => { mp.log(err) })
       const adminRanks = ['None', 'Destek', 'Üst Destek', 'Moderatör', 'Üst Moderatör', 'Personel', 'Yönetim', 'Üst Yönetim', 'yenilmez']
-      const adminColours = ['', '#ff00fa', '#9666ff', '#37db63', '#018a35', '#ff6363', '#ff0000', '#00bbff', '#c096ff']
+      const adminColours = ['', '#dc143c', '#dc143c', '#dc143c', '#dc143c', '#dc143c', '#dc143c', '#dc143c', '#dc143c']
       if (rows.length != 0) {
         player.sqlID = rows[0].id;
         player.name = username

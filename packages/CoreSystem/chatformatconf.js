@@ -15,7 +15,7 @@ const CONFIG = {
   LSPD: '!{#ff8447}',
   staffr: '!{#ff5454}',
   staffB: '!{#00C1FF}',
-  server: '!{#dcabff}[GTACity]!{white} ',
+  server: '!{#dc143c}GTACity:!{white} ',
   green: '!{#78cc78}',
   blue: '!{#6dbce6}',
   grey: '!{#919191}',
@@ -33,7 +33,7 @@ const CONFIG = {
   pmrp: '!{#ca75ff}[GTACity Roleplay]!{#ffffff} ',
   report: '!{#00C1FF}[Şikayet Sistemi]!{white} ',
   gold: '!{#FFD700}',
-  lpink: '!{#dcabff}',
+  lpink: '!{#dc143c}',
   info: '!{#c7ff5e}[Bilgi]!{white} ',
   question: '!{#6dbce6}[Soru Sistemi]!{white} ',
   consoleWhite: '\x1b[0m',
@@ -55,15 +55,15 @@ mp.chat = {
   },
 
   staffMsg: (player, msg) => {
-    player.outputChatBox(`!{#c096ff}[Staff]!{white} ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Personel]!{white} ${msg}`)
   },
 
   server: (player, msg) => {
-    player.outputChatBox(`!{#ac75ff}[Server]!{white} ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Sunucu]!{white} ${msg}`)
   },
 
   aPush: (player, msg) => {
-    player.outputChatBox(`!{#ff4242}[Staff] ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Personel]! ${msg}`)
   },
 
   err: (player, msg) => {
@@ -72,19 +72,19 @@ mp.chat = {
   },
 
   info: (player, msg) => {
-    player.outputChatBox(`!{#f0ff4a}[Bilgi] ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Bilgi]! ${msg}`)
   },
 
   ac: (player, msg) => {
-    player.outputChatBox(`!{#ff4242}[Hile Koruması]!{white} ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Hile Koruması]!{white} ${msg}`)
   },
 
   question: (player, msg) => {
-    player.outputChatBox(`!{#9799fc}[Soru]!{white} ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Soru]!{white} ${msg}`)
   },
 
   quit: (player, msg) => {
-    player.outputChatBox(`!{#dcabff}[Çıkış]!{white} ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Çıkış]!{white} ${msg}`)
   },
 
   success: (player, msg) => {
@@ -92,7 +92,7 @@ mp.chat = {
   },
 
   report: (player, msg) => {
-    player.outputChatBox(`!{#62a3fc}[Şikayet]!{white} ${msg}`)
+    player.outputChatBox(`!{#dc143c}[Şikayet]!{white} ${msg}`)
   },
 
   pmgrey: (player, msg) => {
@@ -100,7 +100,7 @@ mp.chat = {
   },
 
   pmgreen: (player, msg) => {
-    player.outputChatBox(`!{#a4faa2}[PM] ${msg}`)
+    player.outputChatBox(`!{#dc143c}[PM] ${msg}`)
   }
 
 }
