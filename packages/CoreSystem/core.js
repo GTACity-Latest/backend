@@ -218,12 +218,12 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 						player.call("ameCreate", ["Talks quietly."]);
 						if (player.id == ps.id) {
 							ps.outputChatBox(
-								`${player.characterName} ${CONFIG.grey}quietly says:!{white} ${message}`
+								`${player.characterName}:!{white} ${message}`
 							);
 						}
 						if (ps.id != player.id) {
 							ps.outputChatBox(
-								`${localPlayerName} !{#c0b3ef}#${player.sid} ${CONFIG.grey}quietly says:!{white} ${message}`
+								`${localPlayerName} !{#c0b3ef}#${player.sid}:!{white} ${message}`
 							);
 						}
 					});
@@ -485,7 +485,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									ps.outputChatBox(
 										`!{#B777FF}(( !{white} ${player.characterName} !{#c0b3ef}#${
 											player.id
-										} !{#B777FF}says:!{white} ${
+										} !:!{white} ${
 											message[0].toUpperCase() + message.slice(1)
 										} !{#B777FF}))`
 									);
@@ -495,7 +495,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									ps.outputChatBox(
 										`!{#B777FF}(( !{white} ${
 											player.characterName
-										} !{#B777FF}says:!{white} ${
+										} !:!{white} ${
 											message[0].toUpperCase() + message.slice(1)
 										} !{#B777FF}))`
 									);
@@ -504,7 +504,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									ps.outputChatBox(
 										`!{#B777FF}(( !{white} ${localPlayerName} !{#c0b3ef}#${
 											player.id
-										} !{#B777FF}says:!{white} ${
+										} !:!{white} ${
 											message[0].toUpperCase() + message.slice(1)
 										} !{#B777FF}))`
 									);
@@ -514,7 +514,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 					}
 				}),
 				mp.cmds.add(["help"], (player, arg) => {
-					if (arg != null) return mp.chat.info(player, "Use: /help");
+					if (arg != null) return mp.chat.info(player, "Kullanım: /yardım");
 					mp.cmds.getCmds(player);
 				}),
 				mp.cmds.add(["dice", "roll"], (player, value = 6) => {
@@ -1271,17 +1271,17 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
                 let localPlayerName = await ps.callProc('proc:getAlias', [player])
                 if (localPlayerName === undefined) { localPlayerName = 'Player' }
                 if (ps.id == player.id) {
-                  player.outputChatBox(`${player.characterName} (${accent} accent) ${CONFIG.grey}says:!{white} ${msg.join(' ')}`)
+                  player.outputChatBox(`${player.characterName} (${accent} accent):!{white} ${msg.join(' ')}`)
                 }
                 if (ps.id != player.id) {
                   if (ps.dist(player.position) >= 6) {
-                    ps.outputChatBox(`!{#8c8c8c}${localPlayerName} [${player.sid}] (${accent} accent) ${CONFIG.grey}says:!{white} ${msg.join(' ')}`)
+                    ps.outputChatBox(`!{#8c8c8c}${localPlayerName} [${player.sid}] (${accent} accent):!{white} ${msg.join(' ')}`)
                   }
                   else if (ps.dist(player.position) >= 10) {
-                    ps.outputChatBox(`!{#b8b8b8}${localPlayerName} [${player.sid}] (${accent} accent) ${CONFIG.grey}says:!{white} ${msg.join(' ')}`)
+                    ps.outputChatBox(`!{#b8b8b8}${localPlayerName} [${player.sid}] (${accent} accent):!{white} ${msg.join(' ')}`)
                     return;
                   }
-                  else { ps.outputChatBox(`${localPlayerName} [${player.sid}] (${accent} accent) ${CONFIG.grey}says:!{white} ${msg.join(' ')}`) }
+                  else { ps.outputChatBox(`${localPlayerName} [${player.sid}] (${accent} accent):!{white} ${msg.join(' ')}`) }
                 }
               }
             })
@@ -1556,7 +1556,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 										}
 										if (ps.adminDuty) {
 											ps.outputChatBox(
-												`${player.characterName} !{#00000}${player.characterName} ${CONFIG.grey}says:!{white} ${message}`
+												`${player.characterName} !{#00000}${player.characterName}:!{white} ${message}`
 											);
 											return;
 										}
