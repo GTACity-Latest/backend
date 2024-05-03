@@ -193,35 +193,41 @@ async function loadFuelStations() {
     db.player_fuelStations.findAll({}).then((fuelStation) => {
         if (fuelStation.length > 0) {
             fuelStation.forEach((station) => {
-                const pumpPositions = station.pumpPositions;
+                let pumpPositions = station.pumpPositions;
 
-                pumpPositions.length == 0 || pumpPositions == '[]' ? '' : pumpPositions.forEach((pos) => {
-                    var pumpCol = mp.colshapes.newRectangle(pos.x, pos.y, 2, 2, 0);
-                    pumpCol.setVariable('fuelPump', station.id);
-                    pumpCol.setVariable('fuelLevel', station.fuelAmount);
-                    pumpCol.setVariable('litreCost', station.litreCost);
+                if (typeof pumpPositions === 'string') {
+                    pumpPositions = JSON.parse(pumpPositions);
+                }
+                
+                if (Array.isArray(pumpPositions)) {
+                    pumpPositions.forEach((pos) => {
+                        var pumpCol = mp.colshapes.newRectangle(pos.x, pos.y, 2, 2, 0);
+                        pumpCol.setVariable('fuelPump', station.id);
+                        pumpCol.setVariable('fuelLevel', station.fuelAmount);
+                        pumpCol.setVariable('litreCost', station.litreCost);
 
-                    var posObj = {
-                        x: pos.x,
-                        y: pos.y,
-                        z: pos.z
-                    }
+                        var posObj = {
+                            x: pos.x,
+                            y: pos.y,
+                            z: pos.z
+                        };
 
-                    pumpCol.setVariable('drawPosition', JSON.stringify(posObj))
-
-                })
-
-                mp.blips.new(361, new mp.Vector3(station.position.x, station.position.y, station.position.z),
-                    {
-                        name: 'Petrol Station',
-                        color: 59,
-                        shortRange: true,
+                        pumpCol.setVariable('drawPosition', JSON.stringify(posObj));
                     });
+                } else {
+                    console.error('pumpPositions netflix dizisi degildir:', pumpPositions);
+                }
 
-            })
-            mp.log(`${CONFIG.consoleTurq}[Fuel Stations]${CONFIG.consoleWhite} All ${fuelStation.length} ${fuelStation.length == 1 ? 'fuel station were loaded successfully' : 'fuel stations where loaded successfully.'}`)
+                mp.blips.new(361, new mp.Vector3(station.position.x, station.position.y, station.position.z), {
+                    name: 'Petrol Station',
+                    color: 59,
+                    shortRange: true,
+                });
+            });
+
+            mp.log(`${CONFIG.consoleTurq}[Benzin İstasyonları]${CONFIG.consoleWhite} ${fuelStation.length} ${fuelStation.length == 1 ? 'benzin istasyonu başarıyla yüklendi.' : 'benzin istasyonu başarıyla yüklendi.'}`);
         }
-    })
+    });
 }
 
 function roundNum(x, y) {
@@ -229,3 +235,4 @@ function roundNum(x, y) {
     x = Math.round(Math.round(x * factor) / 10);
     return x / (factor / 10);
 }
+
