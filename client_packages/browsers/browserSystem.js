@@ -67,18 +67,21 @@ class browserSystem {
                         mp.game.ui.displayRadar(false);
                         mp.events.call('requestBrowser', `appSys.commit('speedoTog', false)`)
                     }
-                    this.base.execute(`appSys.commit('updateHud', {
-                        unix: ${Math.floor(new Date().getTime() / 1000)},
-                        id: ${mp.players.local.remoteId},
-                        voice: ${mp.voiceChat.muted},
-                        radio: ${mp.players.local.getVariable('radio') ? true : false},
-                        location: '${zoneName.replace(`'`, '')}',
-                        players: ${mp.players.length},
-                        money: ${mp.players.local.getVariable('cashValue')},
-                        locationTwo: '${zoneTwo.replace(`'`, '')}',
-                        direction: '${this.direction}',
-                        fps: ${mp.players.local.frameRate ? mp.players.local.frameRate : '2000'}
-                    })`)
+                    if (mp.players.local.getVariable('loggedIn')) {
+                this.base.execute(`appSys.commit('updateHud', {
+                unix: ${Math.floor(new Date().getTime() / 1000)},
+                id: ${mp.players.local.remoteId},
+                cityName: '${mp.players.local.getVariable('characterName')}',
+                voice: ${mp.voiceChat.muted},
+                radio: ${mp.players.local.getVariable('radio') ? true : false},
+                location: '${zoneName.replace(`'`, '')}',
+                players: ${mp.players.length},
+                money: ${mp.players.local.getVariable('cashValue')},
+                locationTwo: '${zoneTwo.replace(`'`, '')}',
+                direction: '${this.direction}',
+                fps: ${mp.players.local.frameRate ? mp.players.local.frameRate : '2000'}
+                 })`);
+                }
                     this.base.execute(`appSys.commit('updateHungerThirst', {
                         hungerLvl: ${mp.players.local.getVariable('hungerAmount')},
                         thirstLvl: ${mp.players.local.getVariable('thirstAmount')}
