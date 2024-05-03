@@ -6,5 +6,5 @@ const db = require('../models')
 
 db.sequelize.sync().then((req) => {
     logging: true
-    mp.log(`${FgRed}[SEQUELIZE]${FgReset} Sequalize sistemi şu an çalışıyor.`)
+    mp.log(`${FgRed}[SEQUELIZE]${FgReset} Sequelize sistemi şu an çalışıyor.`)
 });

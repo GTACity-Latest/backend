@@ -39,7 +39,7 @@ mp.events.add('client:loginHandler', (handle) => {
                 mp.game.cam.doScreenFadeIn(5000);
                 mp.events.call('requestBrowser', `gui.notify.clearAll()`)
                 if(mp.cameras.exists(loginCam)) {loginCam.delete();}
-                mp.players.local.position = new mp.Vector3(-38.6, -300.5, 78.8);
+                mp.players.local.position = new mp.Vector3(-1374.898681640625, 69.6340103149414, 65.51294708251953);
                 mp.players.local.setAlpha(255);
                 mp.players.local.freezePosition(false);
                 mp.game.graphics.transitionFromBlurred(100);
@@ -55,7 +55,7 @@ mp.events.add('client:loginHandler', (handle) => {
             {
                 mp.events.call('requestBrowser', `gui.notify.clearAll()`)
                 if(mp.cameras.exists(loginCam)) {loginCam.delete();}
-                mp.players.local.position = new mp.Vector3(-38.6, -300.5, 78.8);
+                mp.players.local.position = new mp.Vector3(-1374.898681640625, 69.6340103149414, 65.51294708251953);
                 mp.players.local.setAlpha(255);
                 mp.players.local.freezePosition(false);
                 mp.game.graphics.transitionFromBlurred(100);
@@ -145,7 +145,7 @@ mp.events.add({
         targetEntity.position = new mp.Vector3(-38.6, -510.5, 78.8);
     },
     'client:enableLoginCamera': () => {
-        loginCam = new Camera('loginCam', new mp.Vector3(-79.9, -1600.5, 310.2), new mp.Vector3(-74.8, -819.2, 326.2));
+        loginCam = new Camera('loginCam', new mp.Vector3(-559.1370849609375, 33.47425842285156, 279.1624755859375), new mp.Vector3(-559.1370849609375, 33.47425842285156, 279.1624755859375));
         loginCam.startMoving(7100.0);
         loginCam.setActive(true);
         mp.players.local.position = new mp.Vector3(-811.6, 174.9, 76.8);

@@ -2,8 +2,8 @@ class characterCreation {
     constructor() {
 
         mp.events.add({
-            'setHeadBlend:creator': (firstHeadShape, secondHeadShape, firstSkinTone, secondSkinTone, headMix, skinMix) => {
-                mp.players.local.setHeadBlendData(parseInt(firstHeadShape), parseInt(secondHeadShape), 0, parseInt(firstSkinTone), parseInt(secondSkinTone), 0, headMix, skinMix, 0, false);
+            'setHeadBlend:creator': (firstHeadShape, secondHeadShape, thirdHeadShape, firstSkinTone, secondSkinTone, thirdSkinTone, headMix, skinMix, thirdMix) => {
+                mp.players.local.setHeadBlendData(parseInt(firstHeadShape), parseInt(secondHeadShape), parseInt(thirdHeadShape), parseInt(firstSkinTone), parseInt(secondSkinTone), parseInt(thirdSkinTone), headMix, skinMix, thirdMix, false);
             },
             'setFaceFeature': (cid, scale) => {
                 mp.players.local.setFaceFeature(cid, scale);
