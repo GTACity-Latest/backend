@@ -103,19 +103,15 @@ mp.events.add({
     },
     'playerEnterColshape': (player, shape) => {
         if (shape.getVariable('atm')) {
-            player.call('requestBrowser', [`gui.notify.showNotification("Use 'Y' to interact with this ATM.", true, false, false, 'fa-solid fa-circle-info')`]);
+            player.call('requestBrowser', [`gui.notify.showNotification(" 'Y' tuşuna basarak ATM ile etkileşime geçebilirsin..", true, false, false, 'fa-solid fa-circle-info')`]);
             player.isByAtm = shape.getVariable('atm'), player.setVariable('byAtm', shape.getVariable('atm'));
         }
         if (shape.getVariable('bank')) {
-            var time = mp.enviroment.getTimeData();
-            if (time[0].currentTimeHour >= 8 && time[0].currentTimeHour < 22) {
-                player.call('requestBrowser', [`gui.notify.showNotification("Use 'Y' to interact with the bank teller.", true, false, false, 'fa-solid fa-circle-info')`]);
-                player.isByBank = shape.getVariable('bank'), player.setVariable('byBank', shape.getVariable('bank'));
-                return;
-            } else {
-                player.call('requestBrowser', [`gui.notify.showNotification("The bank is currently closed please come back between its open hours of 8am - 10pm.", true, false, false, 'fa-solid fa-circle-info')`]);
-            }
-        }
+            player.call('requestBrowser', [`gui.notify.showNotification(" 'Y' tuşuna basarak bankacı ile etkileşime geçebilirsin.", true, false, false, 'fa-solid fa-circle-info')`]);
+            player.isByBank = shape.getVariable('bank');
+            player.setVariable('byBank', shape.getVariable('bank'));
+        return;
+        } 
     },
     'playerExitColshape': (player, shape) => {
         if (shape.getVariable('atm')) {
@@ -195,33 +191,62 @@ function loadBank(bank) {
     var pedPositions = bank.pedPositions;
     var markerPositions = bank.markerPositions;
 
-    mp.blips.new(375, new mp.Vector3(bankPos),
-        {
-            name: 'Bank',
-            color: 70,
-            shortRange: true,
+    mp.blips.new(375, new mp.Vector3(bankPos), {
+        name: 'Bank',
+        color: 70,
+        shortRange: true,
+    });
+
+    if (typeof markerPositions === 'string') {
+        markerPositions = JSON.parse(markerPositions);
+    }
+    
+    if (Array.isArray(markerPositions)) {
+        markerPositions.forEach(mpos => {
+            try {
+                var bankCol = mp.colshapes.newRectangle(mpos.x, mpos.y, 7, 7);
+                if (bankCol) {
+                    bankCol.setVariable('bank', bank.id);
+                    mp.markers.new(27, new mp.Vector3(mpos.x, mpos.y, mpos.z - 0.95), 0.8, {
+                        direction: 0,
+                        rotation: 0,
+                        color: [240, 203, 88, 255],
+                        visible: true,
+                        dimension: 0
+                    });
+                } else {
+                    console.error('colshape kismini marker icin olusturamadim, orospu cocuk!:', mpos);
+                }
+            } catch (error) {
+                console.error('colshape olustururken hata olustu otur agla:', error);
+            }
         });
+    } else {
+        console.error('markerPositions netflix dizisi degildir:', markerPositions);
+    }
 
-    markerPositions.forEach(mpos => {
-        var bankCol = mp.colshapes.newRectangle(mpos.x, mpos.y, 1, 1);
-        bankCol.setVariable('bank', bank.id);
-        mp.markers.new(27, new mp.Vector3(mpos.x, mpos.y, mpos.z - 0.95), 0.8,
-            {
-                direction: 0,
-                rotation: 0,
-                color: [240, 203, 88, 255],
-                visible: true,
-                dimension: 0
-            });
-    })
-
-    pedPositions.forEach(ped => {
-        var staticP = mp.peds.new(mp.joaat('ig_andreas'), new mp.Vector3(ped.x, ped.y, ped.z),
-            {
-                dynamic: false,
-                frozen: true,
-                invincible: true
-            });
-        staticP.rotation = new mp.Vector3(0, 0, ped.heading)
-    })
+    if (typeof pedPositions === 'string') {
+        pedPositions = JSON.parse(pedPositions);
+    }
+    
+    if (Array.isArray(pedPositions)) {
+        pedPositions.forEach(ped => {
+            try {
+                var staticP = mp.peds.new(mp.joaat('ig_andreas'), new mp.Vector3(ped.x, ped.y, ped.z), {
+                    dynamic: false,
+                    frozen: true,
+                    invincible: true
+                });
+                staticP.rotation = new mp.Vector3(0, 0, ped.heading);
+            } catch (error) {
+                console.error('ped olustururken hata olustu:', error);
+            }
+        });
+    } else {
+        console.error('pedPositions netflix dizisi degildir:', pedPositions);
+    }
 }
+
+
+
+

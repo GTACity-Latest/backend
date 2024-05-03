@@ -237,13 +237,13 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 				player.question = message;
 				mp.chat.question(
 					player,
-					"Your question has been !{#78cc78}submitted!{white} for online staff members to answer."
+					"!{#78cc78}Sorunuz başarıyla iletildi,!{white} en kısa zamanda yanıtlanacaktır."
 				);
 				mp.players.forEach((ps) => {
 					if (ps.isAdmin > 0 && ps.getVariable("toggledAdmin") === false) {
 						mp.chat.question(
 							ps,
-							`!{grey}ID: !{orange}[!{white}${player.id}!{orange}]!{grey} | Question: !{orange}[!{white}${message}!{orange}]`
+							`!{red}ID: !{white}[!{white}${player.id}!{white}] kullanıcının yardıma ihtiyacı var. !{red} | Sormuş olduğu soru: !{white}${message}`
 						);
 					}
 				});
