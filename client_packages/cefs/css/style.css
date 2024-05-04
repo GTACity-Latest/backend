@@ -110,8 +110,6 @@
     padding-bottom: 0.5vw;
     padding-top: 0.7vw;
     text-align: left;
-    border-bottom: solid rgb(183, 119, 255) 3px;
-    box-shadow: 0 0 30px rgba(183, 119, 255, 0.69);
     margin-bottom: 1vw;
     font-family: Poppins-Regular, sans-serif;
 }

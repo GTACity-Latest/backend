@@ -64,6 +64,98 @@ class inventorySystem {
                 }
             }
         })
+		
+mp.cmds.add(['envanter'], async (player, arg) => {
+    if (arg != null) return mp.chat.info(player, `Kullanım: /envanter`);
+    if (player.isAdmin > 7) {
+        try {
+            const { characters, inventory_items } = require('../models');
+
+            const character = await characters.findOne({ where: { id: player.characterId } });
+
+            if (!character) return mp.chat.err(player, `Karakter bulunamadı.`);
+
+            const items = await inventory_items.findAll({ 
+                where: { OwnerId: character.id },
+                attributes: ['itemName'],
+                raw: true
+            });
+
+            const itemsayma = {};
+            items.forEach((item) => {
+                if (item.itemName in itemsayma) {
+                    itemsayma[item.itemName]++;
+                } else {
+                    itemsayma[item.itemName] = 1;
+                }
+            });
+
+            if (Object.keys(itemsayma).length > 0) {
+                Object.entries(itemsayma).forEach(([itemName, count]) => {
+                    mp.chat.aPush(player, `bunlar var envanterinde al kullan ${itemName} (x${count})`);
+                });
+            } else {
+                mp.chat.aPush(player, `Envanterin bomboş.`);
+            }
+        } catch (error) {
+            mp.log(error);
+            mp.chat.err(player, `Sorun oluştu.`);
+        }
+    } else {
+        mp.chat.err(player, `${CONFIG.noauth}`);
+    }
+});
+
+mp.events.add('listPlayerItems', async () => {
+    mp.players.forEach(async (player) => {
+        try {
+            const { characters, inventory_items } = require('../models');
+
+            const character = await characters.findOne({ where: { id: player.characterId } });
+
+            if (!character) return mp.chat.err(player, `Karakter bulunamadı.`);
+
+            const items = await inventory_items.findAll({
+                where: { OwnerId: character.id },
+                attributes: ['itemName'],
+                raw: true 
+            });
+
+            const itemCounts = {};
+            items.forEach((item) => {
+                itemCounts[item.itemName] = (itemCounts[item.itemName] || 0) + 1;
+            });
+
+            let itemNameText = '';
+            let itemCountText = '';
+            if (Object.keys(itemCounts).length > 0) {
+                Object.entries(itemCounts).forEach(([itemName, count]) => {
+                    itemNameText += `${itemName}\n`;
+                    itemCountText += `(x${count})\n`;
+                });
+            } else {
+                itemNameText = 'Eşya bulunamadı.';
+                itemCountText = '';
+            }
+
+            mp.events.call('requestBrowser', `appSys.commit('updateModal', {
+                itemadi: '${itemNameText}',
+                itemsayisi: '${itemCountText}',
+            })`);
+        } catch (error) {
+            mp.log(error);
+            mp.chat.aPush(player, `Sorun oluştu, yönetime bildirin.`);
+        }
+    });
+});
+
+
+
+
+
+
+
+
 
     }
 }
