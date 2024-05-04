@@ -13,8 +13,8 @@ class playerFoodWater {
             'start:energy': () => {
                 this.energyInter = setInterval(() => {
                     if(this.player.getVariable('loggedIn') && !this.player.getVariable('adminDuty')) {
-                        mp.events.callRemote('player:removeHunger', 1);
-                        mp.events.callRemote('player:removeThirst', 3);
+                        mp.events.callRemote('player:removeHunger', 0);
+                        mp.events.callRemote('player:removeThirst', 0);
                     }
                 }, this.interTime);
             },

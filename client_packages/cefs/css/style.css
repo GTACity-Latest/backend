@@ -214,32 +214,15 @@
 }
 
 .insert {
-  background: -webkit-linear-gradient(right, #4b4b4b, #818181);
+  background-color: #0e0e0e;
   color: #fff;
-  height: 3vw;
-  /*font-family: 'OSL';*/
-  font-family: "OSL";
-  font-family: Myriad Pro, Segoe UI, Verdana, sans-serif;
-  font-weight: 400;
-  src: url("../assets/fonts/OSL.ttf") format("truetype");
+  font-family: 'Poppins-Medium';
+  font-weight: 500;
+  padding: 2px 6px;
   text-align: center;
   margin-top: 0.3vw;
+  border-radius: 4px;
   font-size: 18px;
   line-height: 3vw;
-
   --notchSize: 10px;
-
-  clip-path: polygon(
-    0% var(--notchSize),
-    var(--notchSize) 0%,
-    calc(100% - var(--notchSize)) 0%,
-    100% var(--notchSize),
-    100% calc(100% - var(--notchSize)),
-    calc(100% - var(--notchSize)) 100%,
-    var(--notchSize) 100%,
-    0% calc(100% - var(--notchSize))
-  );
-
-  background-color: #000000f9;
-  background-image: url("../assets/img/diagmonds.png");
 }
