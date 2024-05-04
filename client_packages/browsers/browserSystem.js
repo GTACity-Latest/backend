@@ -324,9 +324,8 @@ class browserSystem {
 
         // Inventory
         mp.keys.bind(73, false, function() {
-            let istyping = mp.players.local.isTypingInTextChat;
             let islogged = mp.players.local.getVariable('loggedIn');
-            if(islogged && !istyping && !mp.game.ui.isPauseMenuActive() && !mp.players.local.phoneStatus) {
+            if(islogged) {
                 if(browserRoute == '/') {
                     mp.events.callRemote('server:getPlayerInventory');
                     return
