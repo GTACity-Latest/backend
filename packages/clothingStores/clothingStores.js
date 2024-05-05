@@ -74,104 +74,120 @@ class clothingStores {
                         })
                 }
             },
-            'playerBuyClothes:server': (player, componentId, type, texture, torso) => {
-                mp.players.forEachInRange(player.position, 200,
-                    async (ps) => {
-                        if (ps.getVariable('loggedIn')) {
-                            ps.call('setEntityClothes', [player, componentId, type, texture])
-                        }
-                    })
-                const { player_clothes } = require('../models')
-                player_clothes.findAll({ where: { OwnerId: player.characterId } }).then((clothes) => {
-                    if (clothes.length > 0) {
-                        const json = JSON.parse(clothes[0].data)
-                        switch (componentId) {
-                            case 1: {
-                                var data = `{"mask": ${parseInt(type)}, "maskTexture": ${texture}, "torso": ${torso}, "Leg": ${json.Leg}, "LegTexture": ${json.LegTexture}, "bags": ${json.bags}, "bagTexture": ${json.bagTexture}, "shoes": ${json.shoes}, "shoesTexture": ${json.shoesTexture}, "acess": ${json.acess}, "acessTexture": ${json.acessTexture}, "undershirt": ${json.undershirt}, "undershirtTexture": ${json.undershirtTexture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${json.tops}, "topsTexture": ${json.topsTexture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new mask for $300", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            case 3: {
-                                var data = `{"mask": ${json.mask}, "maskTexture": ${json.maskTexture}, "torso": ${torso}, "Leg": ${json.Leg}, "LegTexture": ${json.LegTexture}, "bags": ${json.bags}, "bagTexture": ${json.bagTexture}, "shoes": ${json.shoes}, "shoesTexture": ${json.shoesTexture}, "acess": ${json.acess}, "acessTexture": ${json.acessTexture}, "undershirt": ${json.undershirt}, "undershirtTexture": ${json.undershirtTexture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${json.tops}, "topsTexture": ${json.topsTexture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new Torso item for $50", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            case 4: {
-                                var data = `{"mask": ${json.mask}, "maskTexture": ${json.maskTexture}, "torso": ${torso}, "Leg": ${type}, "LegTexture": ${texture}, "bags": ${json.bags}, "bagTexture": ${json.bagTexture}, "shoes": ${json.shoes}, "shoesTexture": ${json.shoesTexture}, "acess": ${json.acess}, "acessTexture": ${json.acessTexture}, "undershirt": ${json.undershirt}, "undershirtTexture": ${json.undershirtTexture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${json.tops}, "topsTexture": ${json.topsTexture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new Leg item for $200", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            case 5: {
-                                var data = `{"mask": ${json.mask}, "maskTexture": ${json.maskTexture}, "torso": ${torso}, "Leg": ${json.Leg}, "LegTexture": ${json.LegTexture}, "bags": ${type}, "bagTexture": ${texture}, "shoes": ${json.shoes}, "shoesTexture": ${json.shoesTexture}, "acess": ${json.acess}, "acessTexture": ${json.acessTexture}, "undershirt": ${json.undershirt}, "undershirtTexture": ${json.undershirtTexture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${json.tops}, "topsTexture": ${json.topsTexture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new bag item for $600", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            case 6: {
-                                var data = `{"mask": ${json.mask}, "maskTexture": ${json.maskTexture}, "torso": ${torso}, "Leg": ${json.Leg}, "LegTexture": ${json.LegTexture}, "bags": ${json.bags}, "bagTexture": ${json.bagTexture}, "shoes": ${type}, "shoesTexture": ${texture}, "acess": ${json.acess}, "acessTexture": ${json.acessTexture}, "undershirt": ${json.undershirt}, "undershirtTexture": ${json.undershirtTexture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${json.tops}, "topsTexture": ${json.topsTexture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new shoe item for $600", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            case 7: {
-                                var data = `{"mask": ${json.mask}, "maskTexture": ${json.maskTexture}, "torso": ${torso}, "Leg": ${json.Leg}, "LegTexture": ${json.LegTexture}, "bags": ${json.bags}, "bagTexture": ${json.bagTexture}, "shoes": ${json.shoes}, "shoesTexture": ${json.shoesTexture}, "acess": ${type}, "acessTexture": ${texture}, "undershirt": ${json.undershirt}, "undershirtTexture": ${json.undershirtTexture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${json.tops}, "topsTexture": ${json.topsTexture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new accessory item for $1900", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            case 8: {
-                                var data = `{"mask": ${json.mask}, "maskTexture": ${json.maskTexture}, "torso": ${torso}, "Leg": ${json.Leg}, "LegTexture": ${json.LegTexture}, "bags": ${json.bags}, "bagTexture": ${json.bagTexture}, "shoes": ${json.shoes}, "shoesTexture": ${json.shoesTexture}, "acess": ${json.acess}, "acessTexture": ${json.acessTexture}, "undershirt": ${type}, "undershirtTexture": ${texture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${json.tops}, "topsTexture": ${json.topsTexture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new undershirt item for $250", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            case 11: {
-                                var data = `{"mask": ${json.mask}, "maskTexture": ${json.maskTexture}, "torso": ${torso}, "Leg": ${json.Leg}, "LegTexture": ${json.LegTexture}, "bags": ${json.bags}, "bagTexture": ${json.bagTexture}, "shoes": ${json.shoes}, "shoesTexture": ${json.shoesTexture}, "acess": ${json.acess}, "acessTexture": ${json.acessTexture}, "undershirt": ${json.undershirt}, "undershirtTexture": ${json.undershirtTexture}, "armor": ${json.armor}, "decals": ${json.decals}, "decalsTexture": ${json.decalsTexture}, "tops": ${type}, "topsTexture": ${texture}}`
-                                player_clothes.update({
-                                    data: data
-                                }, { where: { OwnerId: player.characterId } }).then(() => {
-                                    player.call('requestBrowser', [`gui.notify.showNotification("You have purchased a new top item for $600", false, true, 3000, 'fa-solid fa-circle-info')`])
-                                    mp.events.call('player:setClothing', player)
-                                })
-                                break;
-                            }
-                            default:
-                                break;
-                        }
-                    }
-                })
-            },
+'playerBuyClothes:server': (player, componentId, type, texture, torso) => {
+    const { player_clothes } = require('../models');
+
+    player_clothes.findOne({ where: { OwnerId: player.characterId } }).then((clothes) => {
+        if (clothes) {
+            let jsonData = JSON.parse(clothes.data);
+
+            // Clone the original data
+            let updatedData = { ...jsonData };
+
+            // Update clothing data based on the component ID
+            switch (componentId) {
+                case 1:
+                    updatedData.mask = parseInt(type);
+                    updatedData.maskTexture = texture;
+                    break;
+                case 3:
+                    updatedData.torso = torso;
+                    break;
+                case 4:
+                    updatedData.Leg = type;
+                    updatedData.LegTexture = texture;
+                    break;
+                case 5:
+                    updatedData.bags = type;
+                    updatedData.bagTexture = texture;
+                    break;
+                case 6:
+                    updatedData.shoes = type;
+                    updatedData.shoesTexture = texture;
+                    break;
+                case 7:
+                    updatedData.acess = type;
+                    updatedData.acessTexture = texture;
+                    break;
+                case 8:
+                    updatedData.undershirt = type;
+                    updatedData.undershirtTexture = texture;
+                    break;
+                case 11:
+                    updatedData.tops = type;
+                    updatedData.topsTexture = texture;
+                break;
+                default:
+                    break;
+            }
+
+            // Convert the updated JSON data back to a string
+            const updatedDataString = JSON.stringify(updatedData);
+
+            // Update the database with the merged data
+            player_clothes.update({ data: updatedDataString }, { where: { OwnerId: player.characterId } }).then(() => {
+                // Notify the player and update clothing display
+                console.log("Updated clothing data:", updatedDataString);
+                player.call('requestBrowser', [`gui.notify.showNotification("Clothing successfully updated.", false, true, 3000, 'fa-solid fa-circle-info')`]);
+                mp.events.call('player:setClothing', player);
+            });
+        } else {
+            console.log("Player not found in the database.");
+        }
+    });
+},
+
+'playerBuyProps:server': (player, componentId, type, texture, torso) => {
+    const { player_props } = require('../models');
+
+    player_props.findOne({ where: { OwnerId: player.characterId } }).then((clothes) => {
+        if (clothes) {
+            let jsonData = JSON.parse(clothes.data);
+
+            // Clone the original data
+            let updatedData = { ...jsonData };
+
+            // Update clothing data based on the component ID
+            switch (componentId) {
+                case 0:
+                    updatedData.hats = parseInt(type);
+                    updatedData.hatsTexture = texture;
+                    break;
+                case 1:
+                    updatedData.glasses = type;
+					updatedData.glassesTexture = texture;
+                    break;
+                case 2:
+                    updatedData.ears = type;
+                    updatedData.earsTexture = texture;
+                    break;
+                case 6:
+                    updatedData.watches = type;
+                    updatedData.watchesTexture = texture;
+                    break;
+                case 7:
+                    updatedData.bracelets = type;
+                    updatedData.braceletsTexture = texture;
+                    break;
+                default:
+                    break;
+            }
+
+            // Convert the updated JSON data back to a string
+            const updatedDataString = JSON.stringify(updatedData);
+
+            // Update the database with the merged data
+            player_props.update({ data: updatedDataString }, { where: { OwnerId: player.characterId } }).then(() => {
+                // Notify the player and update clothing display
+                console.log("Updated clothing data:", updatedDataString);
+                player.call('requestBrowser', [`gui.notify.showNotification("Clothing successfully updated.", false, true, 3000, 'fa-solid fa-circle-info')`]);
+                mp.events.call('player:setClothing', player);
+            });
+        } else {
+            console.log("Player not found in the database.");
+        }
+    });
+},
         })
 
         mp.cmds.add(['clothing'], async (player, name) => {

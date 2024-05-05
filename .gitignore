@@ -20,4 +20,3 @@ db backup
 package-lock.json
 .eslintrc.js
 /bin
-.env

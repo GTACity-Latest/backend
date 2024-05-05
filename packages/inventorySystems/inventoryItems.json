@@ -22,7 +22,7 @@
         },
         "5": {
             "name": "Medkit",
-            "img": "rifle.png",
+            "img": "https://cdn1.iconfinder.com/data/icons/healtcare-and-medical-filled/512/Medical_Medikit-512.png",
             "equippable": false
         }
     }

@@ -1786,11 +1786,14 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									.then((props) => {
 										if (props.length > 0) {
 											var prop = JSON.parse(props[0].data);
-											player.setProp(0, parseInt(prop.hats), 0);
-											player.setProp(1, parseInt(props.glasses), 0);
-											player.setProp(2, parseInt(props.ears), 0);
-											player.setProp(6, parseInt(props.watches), 0);
-											player.setProp(7, parseInt(props.bracelets), 0);
+											player.setVariable("propsData", prop);
+											player.call("setPlayerProps", [player, clothes]);
+											console.log("Setting player props:", props);
+											player.setProp(0, parseInt(props.hats), parseInt(props.hatsTexture), true);
+											player.setProp(1, parseInt(props.glasses), parseInt(props.glassesTexture), true);
+											player.setProp(2, parseInt(props.ears), parseInt(props.earsTexture), true);
+											player.setProp(6, parseInt(props.watches), parseInt(props.watchesTexture), true);
+											player.setProp(7, parseInt(props.bracelets), parseInt(props.braceletsTexture), true);
 										}
 									});
 							})

@@ -2,12 +2,16 @@ class playerClothing {
     constructor() {
         this.player = mp.players.local;
         this.torsoType = 0;
+		let attach = true;
 
         mp.events.add({
             'setPlayer:clothes': (cid, drawable, texture) => {
                 mp.events.callRemote('clothingChange:sync', cid, drawable, texture)
                 mp.players.local.setComponentVariation(parseInt(cid), parseInt(drawable), parseInt(texture), 0);
 
+            },
+			'setPlayer:props': (cid, drawable, texture) => {
+                mp.players.local.setPropIndex(parseInt(cid), parseInt(drawable), parseInt(texture), attach);
             },
             'entityStreamIn': (entity) => {
                 if(entity.type == 'player') {
@@ -30,6 +34,9 @@ class playerClothing {
             },
             'playerBuyClothes:client': (cid, type, texture) => {
                 mp.events.callRemote('playerBuyClothes:server', cid, type, texture, this.torsoType)
+            },
+			'playerBuyProps:client': (cid, type, texture) => {
+                mp.events.callRemote('playerBuyProps:server', cid, type, texture)
             },
             'setTorso': (targetEntity, cid, type, texture) => {
                 if(targetEntity.type == 'player') {
@@ -61,6 +68,16 @@ class playerClothing {
                 entity.setComponentVariation(9, parseInt(clothes.armor), 0, 0)
                 entity.setComponentVariation(10, parseInt(clothes.decals), parseInt(clothes.decalsTexture), 0)
                 entity.setComponentVariation(11, parseInt(clothes.tops), parseInt(clothes.topsTexture), 0)
+            },
+			'setPlayerProps': (entity, props) => {
+                if(mp.players.local.getVariable('devdebug')) {
+                    mp.gui.chat.push(`${JSON.stringify(props)}`)
+                }
+                entity.setPropIndex(0, parseInt(props.hats), parseInt(props.hatsTexture), true)
+                entity.setPropIndex(1, parseInt(props.glasses), parseInt(props.glassesTexture), true)
+                entity.setPropIndex(2, parseInt(props.ears), parseInt(props.earsTexture), true)
+                entity.setPropIndex(6, parseInt(props.watches), parseInt(props.watchesTexture), true)
+                entity.setPropIndex(7, parseInt(props.bracelets), parseInt(props.braceletsTexture), true)
             },
             'setTat': (ent, lib, sec) => {
                 if(ent.type == 'player') {

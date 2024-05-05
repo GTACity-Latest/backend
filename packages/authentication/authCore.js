@@ -393,6 +393,7 @@ mp.events.add({
             data: data
           }).then(() => {
             var clothingData = `{"mask": 0, "maskTexture": 0, "torso": 0, "Leg": 1, "LegTexture": 0, "bags": 0, "bagTexture": 0, "shoes": 9, "shoesTexture": 1, "acess": 0, "acessTexture": 0, "undershirt": 15, "undershirtTexture": 0, "armor": 0, "decals": 0, "decalsTexture": 0, "tops": 0, "topsTexture": 1}`;
+			var propsData = `{"hats": 0, "hatsTexture": 0, "glasses": 0, "glassesTexture": 0, "ears": 0, "earsTexture": 0, "watches": 0, "watchesTexture": 0, "bracelets": 0, "braceletsTexture": 0}`;
             if (player.sex == 'male') {
               clothingData = `{"mask": 0, "maskTexture": 0, "torso": 0, "Leg": 1, "LegTexture": 0, "bags": 0, "bagTexture": 0, "shoes": 9, "shoesTexture": 1, "acess": 0, "acessTexture": 0, "undershirt": 15, "undershirtTexture": 0, "armor": 0, "decals": 0, "decalsTexture": 0, "tops": 0, "topsTexture": 1}`;
             }
@@ -402,6 +403,10 @@ mp.events.add({
             db.player_clothes.create({
               OwnerId: id,
               data: clothingData
+            }).catch((err) => { mp.log(err) })
+			db.player_props.create({
+              OwnerId: id,
+              data: propsData
             }).catch((err) => { mp.log(err) })
             var count = 0;
             player.call('client:loginHandler', ['selection'])
