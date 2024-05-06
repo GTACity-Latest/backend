@@ -74,17 +74,15 @@ class clothingStores {
                         })
                 }
             },
-'playerBuyClothes:server': (player, componentId, type, texture, torso) => {
-    const { player_clothes } = require('../models');
+            'playerBuyClothes:server': (player, componentId, type, texture, torso) => {
+              const { player_clothes } = require('../models');
 
-    player_clothes.findOne({ where: { OwnerId: player.characterId } }).then((clothes) => {
-        if (clothes) {
-            let jsonData = JSON.parse(clothes.data);
+              player_clothes.findOne({ where: { OwnerId: player.characterId } }).then((clothes) => {
+              if (clothes) {
+              let jsonData = JSON.parse(clothes.data);
 
-            // Clone the original data
-            let updatedData = { ...jsonData };
+              let updatedData = { ...jsonData };
 
-            // Update clothing data based on the component ID
             switch (componentId) {
                 case 1:
                     updatedData.mask = parseInt(type);
@@ -121,18 +119,16 @@ class clothingStores {
                     break;
             }
 
-            // Convert the updated JSON data back to a string
             const updatedDataString = JSON.stringify(updatedData);
 
-            // Update the database with the merged data
             player_clothes.update({ data: updatedDataString }, { where: { OwnerId: player.characterId } }).then(() => {
-                // Notify the player and update clothing display
                 console.log("Updated clothing data:", updatedDataString);
-                player.call('requestBrowser', [`gui.notify.showNotification("Clothing successfully updated.", false, true, 3000, 'fa-solid fa-circle-info')`]);
+				player.call('requestBrowser', ['gui.notify.clearAll();']);
+                player.call('requestBrowser', [`gui.notify.showNotification("Kıyafetleri başarıyla satın aldın.", false, true, 3000, 'fa-solid fa-circle-info')`]);
                 mp.events.call('player:setClothing', player);
             });
         } else {
-            console.log("Player not found in the database.");
+            console.log("Kullanıcı veritabanında bulunamadı.");
         }
     });
 },
@@ -140,14 +136,12 @@ class clothingStores {
 'playerBuyProps:server': (player, componentId, type, texture, torso) => {
     const { player_props } = require('../models');
 
-    player_props.findOne({ where: { OwnerId: player.characterId } }).then((clothes) => {
-        if (clothes) {
-            let jsonData = JSON.parse(clothes.data);
+    player_props.findOne({ where: { OwnerId: player.characterId } }).then((props) => {
+        if (props) {
+            let jsonData = JSON.parse(props.data);
 
-            // Clone the original data
             let updatedData = { ...jsonData };
 
-            // Update clothing data based on the component ID
             switch (componentId) {
                 case 0:
                     updatedData.hats = parseInt(type);
@@ -173,14 +167,12 @@ class clothingStores {
                     break;
             }
 
-            // Convert the updated JSON data back to a string
             const updatedDataString = JSON.stringify(updatedData);
 
-            // Update the database with the merged data
             player_props.update({ data: updatedDataString }, { where: { OwnerId: player.characterId } }).then(() => {
-                // Notify the player and update clothing display
                 console.log("Updated clothing data:", updatedDataString);
-                player.call('requestBrowser', [`gui.notify.showNotification("Clothing successfully updated.", false, true, 3000, 'fa-solid fa-circle-info')`]);
+                player.call('requestBrowser', ['gui.notify.clearAll();']);
+                player.call('requestBrowser', [`gui.notify.showNotification("Kıyafetleri başarıyla satın aldın.", false, true, 3000, 'fa-solid fa-circle-info')`]);
                 mp.events.call('player:setClothing', player);
             });
         } else {

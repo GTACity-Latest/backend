@@ -32,8 +32,6 @@ mp.events.add({
 });
 
 
-
-
         mp.log(`All ${Object.keys(inventoryItems.items).length} inventory items where loaded: `)
         for(var x = 1; x <= Object.keys(inventoryItems.items).length; x++) {
             mp.log(`ID: ${x}. ${JSON.stringify(inventoryItems.items[x])}`)

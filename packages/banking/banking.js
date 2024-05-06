@@ -103,10 +103,12 @@ mp.events.add({
     },
     'playerEnterColshape': (player, shape) => {
         if (shape.getVariable('atm')) {
+			player.call('requestBrowser', [`gui.notify.clearAll()`]);
             player.call('requestBrowser', [`gui.notify.showNotification(" 'Y' tuşuna basarak ATM ile etkileşime geçebilirsin..", true, false, false, 'fa-solid fa-circle-info')`]);
             player.isByAtm = shape.getVariable('atm'), player.setVariable('byAtm', shape.getVariable('atm'));
         }
         if (shape.getVariable('bank')) {
+			player.call('requestBrowser', [`gui.notify.clearAll()`]);
             player.call('requestBrowser', [`gui.notify.showNotification(" 'Y' tuşuna basarak bankacı ile etkileşime geçebilirsin.", true, false, false, 'fa-solid fa-circle-info')`]);
             player.isByBank = shape.getVariable('bank');
             player.setVariable('byBank', shape.getVariable('bank'));

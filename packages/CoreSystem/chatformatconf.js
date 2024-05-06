@@ -68,7 +68,7 @@ mp.chat = {
 
   err: (player, msg) => {
     player.call('requestBrowser', ['gui.notify.clearAll();']);
-    player.call('requestBrowser', [`gui.notify.sendError("${msg}", 5700)`]);
+    player.call('requestBrowser', [`gui.notify.showNotification("${msg}", 5700)`]);
   },
 
   info: (player, msg) => {
