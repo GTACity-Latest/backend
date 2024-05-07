@@ -2364,8 +2364,7 @@ mp.events.add({
             player.data.isflying = 1;
             player.call('fly:start');
             player.call('requestBrowser', [`gui.notify.clearAll()`]);
-            player.call('notifCreate', [`~g~Enabled~r~ fly`])
-            player.call('requestBrowser', [`gui.notify.showNotification("Enabled Fly", false, true, 7000, 'fa-solid fa-triangle-exclamation')`])
+            player.call('requestBrowser', [`gui.notify.showNotification("Uçuyorsun adamım.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
             player.call('rmname');
             player.alpha = 0;
             return
@@ -2377,8 +2376,7 @@ mp.events.add({
             player.setVariable('adminFly', false);
             player.setVariable('adminRadar', false);
             player.call('requestBrowser', [`gui.notify.clearAll()`]);
-            player.call('notifCreate', [`~r~Disabled fly`])
-            player.call('requestBrowser', [`gui.notify.showNotification("Disabled Fly", false, true, 7000, 'fa-solid fa-triangle-exclamation')`])
+            player.call('requestBrowser', [`gui.notify.showNotification("Tamam seni yere indiriyorum.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
             player.data.isflying = 0;
             player.call('fly:stop')
             player.call('rmname')
@@ -2387,7 +2385,7 @@ mp.events.add({
         }
     },
     'staff:getCount': async (player) => {
-        if (player.isAdmin > 0) {
+        if (player.isAdmin > 7) {
             player.call('requestRoute', ['listMenu', false, false])
             var staffArr = []
             mp.players.forEach((ps) => {
@@ -2461,7 +2459,7 @@ mp.events.add({
             if (player.aVehicleLast && player && player.vehicle) { player.putIntoVehicle(player.aVehicleLast, 0); }
             mp.players.forEach((ps) => {
                 if (ps.isAdmin > 0 && ps.getVariable('toggledAdmin') === false) {
-                    ps.outputChatBox(`!{#b1a1ff}[!{${player.adminColour}}${player.adminSt}!{white}!{#b1a1ff}]!{white} ${player.adminName} is on duty.`)
+                    ps.outputChatBox(`!{#b1a1ff}[!{${player.adminColour}}${player.adminSt}!{white}!{#b1a1ff}]!{white} ${player.adminName} görevde.`)
                 }
             });
         } catch (e) { mp.log(e) }
@@ -2473,7 +2471,7 @@ mp.events.add({
         player.adutyDim = player.dimension
         player.call('notifCreate', [`~r~You are now on duty as ~p~${player.adminName}`])
         player.adminDuty = true;
-        mp.log(`${CONFIG.consoleRed}[ADMIN]${CONFIG.consoleWhite} ${player.adminName} is ${CONFIG.consoleGreen}On-Duty${CONFIG.consoleWhite}`)
+        mp.log(`${CONFIG.consoleRed}[Yönetici]${CONFIG.consoleWhite} ${player.adminName} şu anda ${CONFIG.consoleGreen}görevde.${CONFIG.consoleWhite}`)
         return
     },
     'adutyStop': async (player) => {
@@ -2589,13 +2587,13 @@ mp.events.add({
                                 IP: '${player.ip}',
                                 socialClub: '${player.socialClub}',
                                 reason: '${fullReason}',
-                                admin: '[Server Anti-Cheat]',
+                                admin: 'CityAC',
                                 issueDate: '${currentDate.slice(0, 10)}',
-                                liftTime: 'Ban is permanent'
+                                liftTime: 'Yasaklama kalıcıdır.'
                             });`])
                         player.setVariable('loggedIn', false)
                         player.dimension = 20;
-                        mp.players.forEach((ps) => { if (ps.isAdmin > 0 && ps.getVariable('toggledAdmin') === false) { mp.chat.ac(ps, `!{white}${player.characterName} was banned for Disallowed Weapon. Time: !{#ff4242}permanent!{white}.`) } })
+                        mp.players.forEach((ps) => { if (ps.isAdmin > 0 && ps.getVariable('toggledAdmin') === false) { mp.chat.ac(ps, `!{white}${player.characterName} varolmayan bir silahı kullanmaya çalıştığı için yasaklandı. Süre: !{#ff4242}KALICI!{white}.`) } })
                     }).catch((err) => { mp.log(err) })
                 })
                 return;

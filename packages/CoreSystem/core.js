@@ -1366,7 +1366,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 					},
 					console: (info) => {
 						mp.log(
-							`${CONFIG.consoleBlue}[CLIENT]${CONFIG.consoleWhite} ${JSON.parse(
+							`${CONFIG.consoleBlue}[ISTEMCI]${CONFIG.consoleWhite} ${JSON.parse(
 								info
 							)}`
 						);
@@ -1378,17 +1378,16 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 							if (islogged) {
 								player.call("requestBrowser", [
 									`appSys.commit('updateLists', {
-                  menuName: 'Player Count',
-                  menuSub: 'Currently ${
+                  menuName: 'Oyuncu Listesi',
+                  menuSub: 'Şu anda ${
 										mp.players.length == 1
-											? `${mp.players.length} player`
-											: `${mp.players.length} players`
-									} online.',
+											? `${mp.players.length} oyuncu aktif.`
+											: `${mp.players.length} oyuncu GTACity şehrinde.`
+									}',
                   tableOne: 'Name',
                   tableTwo: 'ID',
-                  tableThree: 'Ping',
                   icon: 'fa-solid fa-users',
-                  name: 'Player [${ps.id}] [${ps.ping}]',
+                  name: '${player.getVariable('characterName')} (${ps.id})',
                   id: ${ps.id},
                   button: false,
                   funcs: ''

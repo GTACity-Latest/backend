@@ -209,7 +209,7 @@ class browserSystem {
 
         var playerPressed = false;
         // Online players count
-        mp.keys.bind(221, false, function() {
+        mp.keys.bind(79, false, function() {
             let istyping = mp.players.local.isTypingInTextChat;
             let islogged = mp.players.local.getVariable('loggedIn');
             if(istyping) return
@@ -228,7 +228,7 @@ class browserSystem {
 
         // Online staff count
         var staffPress = false;
-        mp.keys.bind(219, false, function() {
+        mp.keys.bind(9, false, function() {
             let istyping = mp.players.local.isTypingInTextChat;
             let islogged = mp.players.local.getVariable('loggedIn');
             if(istyping) return
