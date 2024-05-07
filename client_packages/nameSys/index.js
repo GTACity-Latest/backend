@@ -185,7 +185,7 @@ class nametagSys {
             player.getVariable("totalPlayTime") < 0
                 ? "ID"
                 : ""
-        } ~HUD_COLOUR_WHITE~ ${player.getVariable('characterName')} (${sid}~w~)`,
+        } ~HUD_COLOUR_WHITE~ ${player.getVariable('characterName')} (${sid}~w~)`1,
                                 [x, y], {
                                     font: 4,
                                     color: [255, 255, 255, 255],
