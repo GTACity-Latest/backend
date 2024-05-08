@@ -2,7 +2,6 @@
 /dotnet
 /migrations
 /plugins
-/client_packages/game_resources
 /pmrp-frontend/node_modules
 /package-lock.json
 /BugTrap-x64.dll
