@@ -61,6 +61,7 @@ mp.events.add({
 
             }
         }),
+
 	 
 
 
@@ -99,10 +100,10 @@ mp.cmds.add(['envanter'], async (player, arg) => {
 
             if (Object.keys(itemsayma).length > 0) {
                 Object.entries(itemsayma).forEach(([itemName, count]) => {
-                    mp.chat.aPush(player, `bunlar var envanterinde al kullan ${itemName} (x${count})`);
+                    mp.chat.info(player, `bunlar var envanterinde al kullan ${itemName} (x${count})`);
                 });
             } else {
-                mp.chat.aPush(player, `Envanterin bomboş.`);
+                mp.chat.info(player, `Envanterin bomboş.`);
             }
         } catch (error) {
             mp.log(error);
@@ -111,6 +112,33 @@ mp.cmds.add(['envanter'], async (player, arg) => {
 });
 
 
+        mp.cmds.add(['esyaver'], async(player, fullText, id, targetId) => {
+            if (!id || !targetId) return mp.chat.info(player, `Kullanım: /transferitem [EsyaID] [KisiID]`);
+
+            const sourcePlayer = player;
+            const targetPlayer = mp.players.at(parseInt(targetId));
+
+            if (!targetPlayer) return mp.chat.err(player, `Kişi bulunamadı.`);
+
+            const distance = sourcePlayer.dist(targetPlayer.position);
+
+            if (distance > 5) return mp.chat.err(player, `Kişi çok uzakta.`);
+
+            const { inventory_items } = require('../models');
+            const item = await inventory_items.findOne({ where: { OwnerId: sourcePlayer.characterId, id: parseInt(id) } });
+
+            if (!item) return mp.chat.err(player, `Envanterinde bu eşya bulunamadı.`);
+
+            item.update({ OwnerId: targetPlayer.characterId })
+                .then(() => {
+                    mp.chat.info(player, `Eşya ${item.itemName} (ID: ${item.id}) ${targetPlayer.name} kişisine transfer edildi.`);
+                    mp.chat.info(targetPlayer, `${sourcePlayer.characterName} kişisinden bir eşya aldın. ${item.itemName} (ID: ${item.id})`);
+                }).catch((err) => {
+                    mp.chat.err(player, `Transfer edilirken bir hata oluştu: ${err.message}`);
+                });
+        });
     }
 }
+
+
 new inventorySystem()

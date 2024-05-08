@@ -178,42 +178,18 @@ class nametagSys {
                             return;
                         }
 
-                        if (mp.players.local.aliasTog) {
-                            graphics.drawText(
-                                `${
-            player.getVariable("totalPlayTime") &&
-            player.getVariable("totalPlayTime") < 0
-                ? "ID"
-                : ""
-        } ~HUD_COLOUR_WHITE~ ${player.getVariable('characterName')} (${sid}~w~)`,
-                                [x, y], {
-                                    font: 4,
-                                    color: [255, 255, 255, 255],
-                                    scale: [0.4, 0.4],
-                                    outline: false,
-                                }
-                            );
-                        }
                         if (!mp.players.local.aliasTog) {
-                            graphics.drawText(
-                                `${
-            player.getVariable("totalPlayTime") &&
-            player.getVariable("totalPlayTime") < 0
-            ? `~HUD_COLOUR_RED~#${sid}~w~ ${player.getVariable('characterName')}`
-            : `~HUD_COLOUR_RED~#${sid}~w~`
-        } ${
-            player.getVariable('characterName')
-                ? `~HUD_COLOUR_RED~#${sid}~w~ ${player.getVariable('characterName')}`
-                : `~HUD_COLOUR_RED~#${sid}~w~`
-        }`,
-                                [x, y], {
-                                    font: 4,
-                                    color: [255, 255, 255, 255],
-                                    scale: [0.4, 0.4],
-                                    outline: false,
-                                }
-                            );
-                        }
+                        graphics.drawText(
+                        `~HUD_COLOUR_WHITE~ ${player.getVariable('characterName')} (${sid}~w~)`,
+                        [x, y], {
+                        font: 4,
+                        color: [255, 255, 255, 255],
+                        scale: [0.4, 0.4],
+                        outline: false,
+                       }
+                     );
+                    }
+
 
 
                         if (player.getVariable("injured") == true) {
