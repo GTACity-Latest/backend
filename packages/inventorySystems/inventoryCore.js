@@ -136,7 +136,27 @@ mp.cmds.add(['envanter'], async (player, arg) => {
                 }).catch((err) => {
                     mp.chat.err(player, `Transfer edilirken bir hata oluştu: ${err.message}`);
                 });
-        });
+		});
+
+         mp.cmds.add(['esyasil'], async(player, fullText, id) => {
+            if (!id) return mp.chat.info(player, `Kullanım: /esyasil [ItemID]`);
+            
+            const sourcePlayer = player;
+            
+            const { inventory_items } = require('../models');
+            
+            const item = await inventory_items.findOne({ where: { OwnerId: sourcePlayer.characterId, id: parseInt(id) } });
+
+            if (!item) return mp.chat.err(player, `Eşya envanterinizde bulunamadı.`);
+
+            item.destroy()
+                .then(() => {
+                    mp.chat.info(player, `Eşya ${item.itemName} (ID: ${item.id}) başarıyla silindi.`);
+                })
+                .catch((err) => {
+                    mp.chat.err(player, `Bir hata oluştu, bu hatayı yönetime iletin: ${err.message}`);
+                });
+            });
     }
 }
 
