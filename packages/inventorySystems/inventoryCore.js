@@ -1,3 +1,4 @@
+//GTACity Inventory System V0.0.1
 class inventorySystem {
     constructor() {
         let inventoryItems = require('./inventoryItems.json')
@@ -13,7 +14,7 @@ mp.events.add({
                     player.call('requestBrowser', [`appSys.commit('clearInventory')`]);
                     player.call('requestRoute', ['inventory', true, true]);
                     inventory.forEach((inven) => {
-                        console.log(`id: ${inven.id},
+                       (`id: ${inven.id},
 						cityitemid: ${inven.itemId},
                         name: '${inven.itemName}',
                         img: '${inventoryItems.items[inven.itemId].img}'`);
@@ -31,8 +32,60 @@ mp.events.add({
     }
 });
 
+mp.events.add({
+    'esyaver:server': async (player, itemId) => {
+        let nearestPlayer = findNearestPlayer(player);
+        if (nearestPlayer && player.dist(nearestPlayer.position) <= 5) {
+            const { inventory_items } = require('../models');
+            inventory_items.findOne({ where: { id: itemId, OwnerId: player.characterId } })
+                .then((item) => {
+                    if (item) {
+                        inventory_items.update({ OwnerId: nearestPlayer.characterId }, { where: { id: itemId } })
+                            .then((result) => {
+                                if (result[0] > 0) {
+                                    player.call('requestBrowser', [`gui.notify.showNotification("Başarıyla ${nearestPlayer.name} kişisine transfer ettin.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                                    nearestPlayer.outputChatBox(`${player.name} kişisi sana bir eşya verdi.`);
+                                } else {
+                                    player.call('requestBrowser', [`gui.notify.showNotification("Transfer edilirken bir hata oluştu, yöneticiye ulaşın.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Oyuncu eşyayı veremedi:", error);
+                                player.call('requestBrowser', [`gui.notify.showNotification("Transfer edilirken bir hata oluştu, yöneticiye ulaşın.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                            });
+                    } else {
+                        player.call('requestBrowser', [`gui.notify.showNotification("Bu eşyaya sahip değilsin.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                    }
+                })
+                .catch((error) => {
+                    console.error("Sahipliği kontrol ederken hata:", error);
+                    player.call('requestBrowser', [`gui.notify.showNotification("Bu eşyaya sahip değilsin ya da farklı bir hata oluştu.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                });
+        } else {
+            player.call('requestBrowser', [`gui.notify.showNotification("Yakınında eşyayı verebileceğin bir oyuncu yok.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+        }
+    }
+});
 
-        mp.log(`All ${Object.keys(inventoryItems.items).length} inventory items where loaded: `)
+function findNearestPlayer(player) {
+    let nearestPlayer = null;
+    let minDistance = Infinity;
+
+    mp.players.forEach((p) => {
+        if (p !== player) {
+            let distance = player.dist(p.position);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestPlayer = p;
+            }
+        }
+    });
+
+    return nearestPlayer;
+}
+
+
+        mp.log(`Tüm ${Object.keys(inventoryItems.items).length} envanter eşyaları şu şekilde yüklendi: `)
         for(var x = 1; x <= Object.keys(inventoryItems.items).length; x++) {
             mp.log(`ID: ${x}. ${JSON.stringify(inventoryItems.items[x])}`)
         }
@@ -137,6 +190,7 @@ mp.cmds.add(['envanter'], async (player, arg) => {
                     mp.chat.err(player, `Transfer edilirken bir hata oluştu: ${err.message}`);
                 });
 		});
+
 
          mp.cmds.add(['esyasil'], async(player, fullText, id) => {
             if (!id) return mp.chat.info(player, `Kullanım: /esyasil [ItemID]`);

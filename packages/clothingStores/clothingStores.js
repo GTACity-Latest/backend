@@ -122,7 +122,6 @@ class clothingStores {
             const updatedDataString = JSON.stringify(updatedData);
 
             player_clothes.update({ data: updatedDataString }, { where: { OwnerId: player.characterId } }).then(() => {
-                console.log("Updated clothing data:", updatedDataString);
 				player.call('requestBrowser', ['gui.notify.clearAll();']);
                 player.call('requestBrowser', [`gui.notify.showNotification("Kıyafetleri başarıyla satın aldın.", false, true, 3000, 'fa-solid fa-circle-info')`]);
                 mp.events.call('player:setClothing', player);
@@ -170,7 +169,6 @@ class clothingStores {
             const updatedDataString = JSON.stringify(updatedData);
 
             player_props.update({ data: updatedDataString }, { where: { OwnerId: player.characterId } }).then(() => {
-                console.log("Updated clothing data:", updatedDataString);
                 player.call('requestBrowser', ['gui.notify.clearAll();']);
                 player.call('requestBrowser', [`gui.notify.showNotification("Kıyafetleri başarıyla satın aldın.", false, true, 3000, 'fa-solid fa-circle-info')`]);
                 mp.events.call('player:setClothing', player);

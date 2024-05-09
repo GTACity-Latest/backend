@@ -1787,7 +1787,6 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 											var props = JSON.parse(props[0].data);
 											player.setVariable("propsData", props);
 											player.call("setPlayerProps", [player, props]);
-											console.log("Setting player props:", props);
 										}
 									});
 							})
