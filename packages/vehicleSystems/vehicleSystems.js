@@ -392,8 +392,8 @@ class vehicleSystems {
                         player.call('requestRoute', ['listMenu', true, true]);
                         vehicles.forEach((veh) => {
                             player.call('requestBrowser', [`appSys.commit('updateLists', {
-                                menuName: 'Your vehicles',
-                                menuSub: 'You have ${vehicles.length} vehicles.',
+                                menuName: 'Araçlarım',
+                                menuSub: '${vehicles.length} aracın bulunuyor.',
                                 tableOne: 'Name',
                                 icon: 'fa-solid fa-car',
                                 name: '${player.adminDuty ? `<font style="color:grey; font-size:15px; float:left;">#${veh.id}</font> ${veh.vehicleModelName}` : veh.vehicleModelName}',

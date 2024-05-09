@@ -67,6 +67,36 @@ mp.events.add({
     }
 });
 
+mp.events.add({
+    'esyasil:server': async (player, itemId) => {
+        const { inventory_items } = require('../models');
+        inventory_items.findOne({ where: { id: itemId, OwnerId: player.characterId } })
+            .then((item) => {
+                if (item) {
+                    inventory_items.destroy({ where: { id: itemId } })
+                        .then((result) => {
+                            if (result > 0) {
+                                player.call('requestBrowser', [`gui.notify.showNotification("Başarıyla eşyayı sildin.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                            } else {
+                                player.call('requestBrowser', [`gui.notify.showNotification("Eşya silinirken bir hata oluştu, yöneticiye ulaşın.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Eşya silinirken hata:", error);
+                            player.call('requestBrowser', [`gui.notify.showNotification("Eşya silinirken bir hata oluştu, yöneticiye ulaşın.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                        });
+                } else {
+                    player.call('requestBrowser', [`gui.notify.showNotification("Bu eşyaya sahip değilsin.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+                }
+            })
+            .catch((error) => {
+                console.error("Sahipliği kontrol ederken hata:", error);
+                player.call('requestBrowser', [`gui.notify.showNotification("Bu eşyaya sahip değilsin ya da farklı bir hata oluştu.", false, true, 2000, 'fa-solid fa-triangle-exclamation')`])
+            });
+    }
+});
+
+
 function findNearestPlayer(player) {
     let nearestPlayer = null;
     let minDistance = Infinity;
