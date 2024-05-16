@@ -161,7 +161,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 				if (message == null)
 					return mp.chat.info(player, "Use: /shout [message]");
 				if (player.getVariable("injured") == true)
-					return mp.chat.err(player, "You cannot shout whilst injured.");
+					return mp.chat.err(player, "Yaralıyken bağıramazsın.");
 				if (
 					message.length > 0 &&
 					message != "" &&
@@ -399,6 +399,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 						`appSys.commit('updateStats', {
             name: '${player.characterName}',
             id: ${player.id},
+			sex: ${player.sex},
             bank: '${player.moneyAmount.toLocaleString("en-US")}',
             cash: '${player.cashAmount.toLocaleString("en-US")}',
             credits: '${player.creditsAmount.toLocaleString("en-US")}',
@@ -715,8 +716,8 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 						}
 					}
 				),
-				mp.cmds.add(["pmb", "pmback"], async (player, message) => {
-					if (!message) return mp.chat.info(player, `Use: /pmb [message]`);
+				mp.cmds.add(["r", "re"], async (player, message) => {
+					if (!message) return mp.chat.info(player, `Use: /re [message]`);
 					if (player.getVariable("lastPm")) {
 						mp.players.forEach(async (ps) => {
 							if (ps.characterId == player.getVariable("lastPm")) {
@@ -1094,13 +1095,13 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 						}
 					}
 				),
-				mp.cmds.add(["fdo", "floatingdo"], async (player, message) => {
-					if (!message) return mp.chat.info(player, `Use: /fdo [message]`);
+				mp.cmds.add(["bm", "bilgimesaji"], async (player, message) => {
+					if (!message) return mp.chat.info(player, `Use: /bm [içerik]`);
 					message.replace(/~/, "");
 					if (message.length > 100) {
 						return mp.chat.err(
 							player,
-							`You cannot have more then 100 characters in a floating do statement`
+							`Bilgi mesajında yüz karakterden fazlasını kullanamazsın.`
 						);
 					}
 					const { floating_dos } = require("../models");
@@ -1110,7 +1111,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 							if (fdo.length >= 15) {
 								return mp.chat.err(
 									player,
-									`You cannot have more then 15 floating do statements.`
+									`En fazla on beş adet bilgi mesajı kullanabilirsin.`
 								);
 							} else {
 								floating_dos
@@ -1123,9 +1124,9 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 										const fdo = mp.labels.new(
 											`~HUD_COLOUR_PURPLELIGHT~((~w~ ${message} ~HUD_COLOUR_PURPLELIGHT~)) \n~c~#${
 												JSON.parse(JSON.stringify(floatingStatement)).id
-											} ~HUD_COLOUR_NET_PLAYER10~[ Use: /removefdo ${
+											} ~HUD_COLOUR_NET_PLAYER10~[Kaldırmak için /bmkaldir ${
 												JSON.parse(JSON.stringify(floatingStatement)).id
-											} ] to remove`,
+											} yazabilirsin.]`,
 											player.position,
 											{
 												font: 4,
@@ -1140,16 +1141,14 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 										);
 										mp.chat.success(
 											player,
-											`You placed a floating do statement with ID: ${
-												JSON.parse(JSON.stringify(floatingStatement)).id
-											}`
+											`Yeni bir bilgi mesajı ekledin.`
 										);
 									});
 							}
 						});
 				}),
-				mp.cmds.add(["removefdo", "rfdo"], async (player, id) => {
-					if (!id) return mp.chat.info(player, `Use: /removefdo [id]`);
+				mp.cmds.add(["bmkaldir", "bmk"], async (player, id) => {
+					if (!id) return mp.chat.info(player, `Use: /bmkaldir [id]`);
 					mp.labels.forEachInRange(player.position, 20, async (lab) => {
 						if (lab.getVariable("sqlID") == id) {
 							const { floating_dos } = require("../models");
@@ -1171,16 +1170,14 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 											})
 											.then(() => {
 												player.call("requestBrowser", [
-													`gui.notify.showNotification("Removed floating do statement with ID: ${lab.getVariable(
-														"sqlID"
-													)}", false, true, 15000, 'fas fa-check-circle')`,
+													`gui.notify.showNotification("Başarıyla bilgi mesajını kaldırdın.", false, true, 15000, 'fas fa-check-circle')`,
 												]);
 												lab.destroy();
 											});
 									} else {
 										return mp.chat.err(
 											player,
-											`You do not own this floating do statement.`
+											`Bu ID'ye ait bir bilgi mesajın bulunmuyor.`
 										);
 									}
 								});
@@ -1194,7 +1191,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 					if (desc.length > 500)
 						return mp.chat.err(
 							player,
-							`Your character description can not be more then 500 characters.`
+							`Karakter açıklaman beş yüz karakterden fazla olamaz.`
 						);
 					const { character_descriptions } = require("../models");
 					character_descriptions
@@ -1209,7 +1206,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									.then(() => {
 										mp.chat.success(
 											player,
-											`You set your character description to ${desc}`
+											`Karakter açıklamanı başarıyla ayarladın: ${desc}`
 										);
 									});
 								return;
@@ -1225,14 +1222,14 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									.then(() => {
 										mp.chat.success(
 											player,
-											`You edited your character description to ${desc}`
+											`Karakter açıklamanı başarıyla düzenledin: ${desc}`
 										);
 									});
 							}
 						});
 				}),
-				mp.cmds.add(["examine"], async (player, target) => {
-					if (!target) return mp.chat.info(player, `Use: /examine [id]`);
+				mp.cmds.add(["incele"], async (player, target) => {
+					if (!target) return mp.chat.info(player, `Use: /incele [id]`);
 					mp.players.forEachInRange(player.position, 20, async (ps) => {
 						if (
 							ps.id == target &&
@@ -1246,7 +1243,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									if (desc.length == 0)
 										return mp.chat.info(
 											player,
-											`This player has not set their characters description`
+											`Bu oyuncunun karakter açıklaması bulunmuyor.`
 										);
 									let localPlayerName = await player.callProc("proc:getAlias", [
 										ps,
@@ -1256,7 +1253,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									}
 									mp.chat.info(
 										player,
-										`${localPlayerName} [${ps.id}]'s character description is: ${desc}`
+										`${localPlayerName} [${ps.id}]'isimli karakterin karakter açıklaması: ${desc}`
 									);
 								});
 						}
@@ -1515,7 +1512,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 					playerCommand: (player) => {
 						mp.chat.err(
 							player,
-							"Invalid Command. Use /help to view all available commands"
+							"Böyle bir komut bulanamadı. /yardim komutunu kullanarak komutları görüntüleyebilirsin."
 						);
 					},
 					playerChat: (player, message) => {

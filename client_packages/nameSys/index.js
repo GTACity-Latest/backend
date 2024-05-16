@@ -92,7 +92,7 @@ class nametagSys {
                         var health = player.getHealth();
                         health = health < 100 ? 0 : (health - 100) / 100;
 
-                        y -= scale * (0.005 * (screenRes.y / 1080));
+                        y -= (0.005 * (screenRes.y / 1080));
                         if (isflying) return;
                         if (crouched) return;
 
