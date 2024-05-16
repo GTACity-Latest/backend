@@ -41,38 +41,11 @@ class clothingStores {
                     }
                 })
             },
-            'clothingChange:sync': async (player, cid, draw, texture) => {
-                if (cid == 11) {
-                    const torsoDataMale = require('./torsoDataM.json');
-                    const torsoDataFemale = require('./torsoDataF.json');
-                    const models = [mp.joaat('mp_m_freemode_01'), mp.joaat('mp_f_freemode_01')]
-                    if (player.model == models[0]) {
-                        if (torsoDataMale[draw] === undefined || torsoDataMale[draw][texture] === undefined) {
-                            return;
-                        } else {
-                            mp.players.forEachInRange(player.position, 200,
-                                async (ps) => {
-                                    if (torsoDataMale[draw][texture].BestTorsoDrawable != -1) ps.call('setTorso', [player, 3, torsoDataMale[draw][texture].BestTorsoDrawable, torsoDataMale[draw][texture].BestTorsoTexture]);
-                                    ps.call('setEntComponents', [player, cid, draw, texture])
-                                })
-                        }
-                    } else if (player.model == models[1]) {
-                        if (torsoDataFemale[draw] === undefined || torsoDataFemale[draw][texture] === undefined) {
-                            return;
-                        } else {
-                            mp.players.forEachInRange(player.position, 200,
-                                async (ps) => {
-                                    if (torsoDataFemale[draw][texture].BestTorsoDrawable != -1) ps.call('setTorso', [player, 3, torsoDataFemale[draw][texture].BestTorsoDrawable, torsoDataFemale[draw][texture].BestTorsoTexture]);
-                                    ps.call('setEntComponents', [player, cid, draw, texture])
-                                })
-                        }
-                    }
-                } else if (cid != 11) {
+            'clothingChange:sync': async (player, cid, draw, texture) => {          
                     mp.players.forEachInRange(player.position, 200,
                         async (ps) => {
                             ps.call('setEntComponents', [player, cid, draw, texture])
-                        })
-                }
+                        })     
             },
             'playerBuyClothes:server': (player, componentId, type, texture, torso) => {
               const { player_clothes } = require('../models');
