@@ -31,13 +31,13 @@ class characterCreation {
                     entity.setHeadOverlay(10, parseInt(json.chestHairStyle), 1.0, 0, 0);
                     entity.setHeadOverlay(2, parseInt(json.eyebrowsStyle), 1.0, parseInt(json.eyebrowsColour), 0);
                     entity.setHeadOverlay(5, parseInt(json.blushStyle), 1.0, parseInt(json.blushColour), 0);
-                    entity.setHeadOverlay(8, parseInt(json.lipstick), 1.0, 0, 0);
+                    entity.setHeadOverlay(8, parseInt(json.lipstick), 1.0, parseInt(json.lipstickColour), 0);
                     entity.setHeadOverlay(0, parseInt(json.blemishes), 1.0, 0, 0);
                     entity.setHeadOverlay(3, parseInt(json.ageing), 1.0, 0, 0);
                     entity.setHeadOverlay(6, parseInt(json.complexion), 1.0, 0, 0);
                     entity.setHeadOverlay(7, parseInt(json.sunDamage), 1.0, 0, 0);
                     entity.setHeadOverlay(9, parseInt(json.molesFreckles), 1.0, 0, 0);
-                    entity.setHeadOverlay(4, parseInt(json.makeup), 1.0, 0, 0);
+                    entity.setHeadOverlay(4, parseInt(json.makeup), 1.0, parseInt(json.makeupColour), 0);
                     entity.setFaceFeature(0, parseInt(json.noseWidth));
                     entity.setFaceFeature(1, parseInt(json.noseHeight));
                     entity.setFaceFeature(2, parseInt(json.noseLength));
