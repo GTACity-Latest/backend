@@ -399,7 +399,7 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 						`appSys.commit('updateStats', {
             name: '${player.characterName}',
             id: ${player.id},
-			sex: ${player.sex},
+			sex: '${player.sex}',
             bank: '${player.moneyAmount.toLocaleString("en-US")}',
             cash: '${player.cashAmount.toLocaleString("en-US")}',
             credits: '${player.creditsAmount.toLocaleString("en-US")}',
@@ -1773,15 +1773,15 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 									player.call("setPlayerClothes", [player, clothes]);
 								}
 								const { player_props } = require("../models");
-								player_props
+								db.player_props
 									.findAll({
 										where: {
 											OwnerId: player.characterId,
 										},
 									})
-									.then((props) => {
-										if (props.length > 0) {
-											var props = JSON.parse(props[0].data);
+									.then((aprops) => {
+										if (aprops.length > 0) {
+											var props = JSON.parse(aprops[0].data);
 											player.setVariable("propsData", props);
 											player.call("setPlayerProps", [player, props]);
 										}

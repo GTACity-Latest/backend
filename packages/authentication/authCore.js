@@ -264,7 +264,7 @@ mp.events.add({
               player.setVariable('characterName', player.characterName)
               player.setVariable('adminName', player.adminName);
               player.dimension = 0
-              mp.chat.server(player, `!{green}GTACity'e tekrardan hoş geldin !{#dc143c}${player.name}! /yardim kullanarak tüm komutları görüntüleyebilirsin.`)
+              mp.chat.server(player, `!{green}GTACity'e tekrardan hoş geldin !{#white}${player.name}! /yardim kullanarak tüm komutları görüntüleyebilirsin.`)
               mp.chat.server(player, '!{red}GTACity V0.0.1 - We just started.')
               if (player.isAdmin > 0) {
                 mp.chat.staffMsg(player, `Yönetime hoş geldin, !{${player.adminColour}}${player.adminSt}!{white} ${player.adminName}!{white}`)

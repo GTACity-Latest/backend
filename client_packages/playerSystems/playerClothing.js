@@ -11,6 +11,7 @@ class playerClothing {
 
             },
 			'setPlayer:props': (cid, drawable, texture) => {
+				mp.events.callRemote('propsChange:sync', cid, drawable, texture)
                 mp.players.local.setPropIndex(parseInt(cid), parseInt(drawable), parseInt(texture), attach);
             },
             'entityStreamIn': (entity) => {
@@ -21,10 +22,16 @@ class playerClothing {
                     if(entity.getVariable('clothingData')) {
                         mp.events.call('setPlayerClothes', entity, entity.getVariable('clothingData'))
                     }
+					if(entity.getVariable('propsData')) {
+                        mp.events.call('setPlayerProps', entity, entity.getVariable('propsData'))
+                    }
                 }
             },
             'setEntComponents': (entity, cid, draw, texture) => {
                 entity.setComponentVariation(parseInt(cid), parseInt(draw), parseInt(texture), 0);
+            },
+			'setPropThings': (entity, cid, draw, texture) => {
+                entity.setPropIndex(parseInt(cid), parseInt(draw), parseInt(texture), attach);
             },
             'reset:clothes': () => {
                 if(mp.players.local.getVariable('clothingData')) {
