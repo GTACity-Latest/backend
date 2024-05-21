@@ -21,7 +21,7 @@ class characterCreation {
                 mp.players.local.setHeadOverlay(parseInt(id), parseInt(ctype), 1.0, parseInt(cid), 0);
             },
             'setHeadOverlayMakeup': (id, ctype, opacity, cid) => {
-                mp.players.local.setHeadOverlay(parseInt(id), parseInt(ctype), parseInt(opacity), parseInt(cid), 0);
+                mp.players.local.setHeadOverlay(parseInt(id), parseInt(ctype), parseFloat(opacity), parseInt(cid), 0);
             },
             'setPlayerFace': (entity, json) => {
                 if(entity.type == 'player') {
@@ -33,14 +33,14 @@ class characterCreation {
                     entity.setEyeColor(parseInt(json.eyeColour));
                     entity.setHeadOverlay(10, parseInt(json.chestHairStyle), 1.0, 0, 0);
                     entity.setHeadOverlay(2, parseInt(json.eyebrowsStyle), 1.0, parseInt(json.eyebrowsColour), 0);
-                    entity.setHeadOverlay(5, parseInt(json.blushStyle), parseInt(json.blushOpacity), parseInt(json.blushColour), 0);
-                    entity.setHeadOverlay(8, parseInt(json.lipstick), parseInt(json.lipstickOpacity), parseInt(json.lipstickColour), 0);
+                    entity.setHeadOverlay(5, parseInt(json.blushStyle), parseFloat(json.blushOpacity), parseInt(json.blushColour), 0);
+                    entity.setHeadOverlay(8, parseInt(json.lipstick), parseFloat(json.lipstickOpacity), parseInt(json.lipstickColour), 0);
                     entity.setHeadOverlay(0, parseInt(json.blemishes), 1.0, 0, 0);
                     entity.setHeadOverlay(3, parseInt(json.ageing), 1.0, 0, 0);
                     entity.setHeadOverlay(6, parseInt(json.complexion), 1.0, 0, 0);
                     entity.setHeadOverlay(7, parseInt(json.sunDamage), 1.0, 0, 0);
                     entity.setHeadOverlay(9, parseInt(json.molesFreckles), 1.0, 0, 0);
-                    entity.setHeadOverlay(4, parseInt(json.makeup), parseInt(json.makeupOpacity), parseInt(json.makeupColour), 0);
+                    entity.setHeadOverlay(4, parseInt(json.makeup), parseFloat(json.makeupOpacity), parseInt(json.makeupColour), 0);
                     entity.setFaceFeature(0, parseInt(json.noseWidth));
                     entity.setFaceFeature(1, parseInt(json.noseHeight));
                     entity.setFaceFeature(2, parseInt(json.noseLength));
