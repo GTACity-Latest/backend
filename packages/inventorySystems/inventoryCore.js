@@ -15,11 +15,13 @@ mp.events.add({
                     player.call('requestRoute', ['inventory', true, true]);
                     inventory.forEach((inven) => {
                        (`id: ${inven.id},
+					    sex: '${player.sex}',
 						cityitemid: ${inven.itemId},
                         name: '${inven.itemName}',
                         img: '${inventoryItems.items[inven.itemId].img}'`);
                         player.call('requestBrowser', [`appSys.commit('addInventoryItem', {
                             id: ${inven.id},
+							sex: '${player.sex}',
 							cityitemid: ${inven.itemId},
                             name: '${inven.itemName}',
                             img: '${inventoryItems.items[inven.itemId].img}',

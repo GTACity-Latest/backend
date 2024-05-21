@@ -47,6 +47,12 @@ class clothingStores {
                             ps.call('setEntComponents', [player, cid, draw, texture])
                         })     
             },
+			'propsChange:sync': async (player, cid, draw, texture) => {          
+                    mp.players.forEachInRange(player.position, 200,
+                        async (ps) => {
+                            ps.call('setPropThings', [player, cid, draw, texture])
+                        })     
+            },
             'playerBuyClothes:server': (player, componentId, type, texture, torso) => {
               const { player_clothes } = require('../models');
 
