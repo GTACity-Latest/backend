@@ -26,7 +26,7 @@ class characterCreation {
             'setPlayerFace': (entity, json) => {
                 if(entity.type == 'player') {
                     entity.clearDecorations();
-                    entity.setHeadBlendData(parseInt(json.mother), parseInt(json.father), 0, parseInt(json.mother), parseInt(json.father), 0, json.mix*0.01, json.skinMix*0.01, 0, false);
+                    entity.setHeadBlendData(parseInt(json.mother), parseInt(json.father), parseInt(json.third), parseInt(json.skinMother), parseInt(json.skinFather), parseInt(json.skinThird), json.mix*0.01, json.skinMix*0.01, json.thirdMix*0.01, false);
                     entity.setComponentVariation(2, parseInt(json.hairStyle), 0, 0);
                     entity.setHairColor(parseInt(json.hairColour), parseInt(json.hairHighlights));
                     entity.setHeadOverlay(1, parseInt(json.facialHairStyle), 1.0, parseInt(json.facialHairColour), 0);
