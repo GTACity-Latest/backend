@@ -474,6 +474,12 @@ mp.cmds.add(['acreation'], async (player, arg) => {
     }
     mp.chat.err(player, `${CONFIG.noauth}`)
 })
+mp.cmds.add(['makyaj'], async (player, arg) => {
+    if (arg != null) return mp.chat.info(player, `Kullanım: /makyaj`)   
+        player.call('requestRoute', ['makyaj'])
+        return
+    }
+)
 mp.cmds.add(['addclothes'], async (player, name) => {
     if (!name) return mp.chat.info(player, `Use: /addclothes [name]`)
     if (player.isAdmin > 7) {
