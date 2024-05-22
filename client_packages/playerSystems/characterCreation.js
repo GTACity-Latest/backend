@@ -62,6 +62,14 @@ class characterCreation {
                     entity.setFaceFeature(18, parseInt(json.chinShape));
                     entity.setFaceFeature(19, parseInt(json.neckWidth));
                 }
+            },
+            'updateMakeup': (entity, json) => {
+                if(entity.type == 'player') {
+                    entity.clearDecorations();
+                    entity.setHeadOverlay(5, parseInt(json.blushStyle), parseFloat(json.blushOpacity), parseInt(json.blushColour), 0);
+                    entity.setHeadOverlay(8, parseInt(json.lipstick), parseFloat(json.lipstickOpacity), parseInt(json.lipstickColour), 0);
+                    entity.setHeadOverlay(4, parseInt(json.makeup), parseFloat(json.makeupOpacity), parseInt(json.makeupColour), 0);
+                }
             }
         })
     }
