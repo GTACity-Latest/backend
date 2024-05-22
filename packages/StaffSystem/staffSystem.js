@@ -476,7 +476,7 @@ mp.cmds.add(['acreation'], async (player, arg) => {
 })
 mp.cmds.add(['makyaj'], async (player, arg) => {
     if (arg != null) return mp.chat.info(player, `Kullanım: /makyaj`)   
-        player.call('requestRoute', ['makyaj'])
+        player.call('requestRoute', ['makeup'])
         return
     }
 )
