@@ -349,30 +349,6 @@ mp.events.add({
       })
     }
   },
-  'characterMakeup': async (player, data) => {
-    db.characters.findAll({ where: { cName: player.characterName } }).then((charCheck) => {
-        if (charCheck.length == 0) {
-            // Karakter mevcut değilse, kullanıcıya karakterin mevcut olmadığını bildir
-            player.call('requestBrowser', [`gui.notify.showNotification("Karakter adı mevcut değil.", false, true, 15000, 'fa-solid fa-triangle-exclamation')`]);
-        } else {
-            // Mevcut karakter varsa, modeli güncelle
-            db.characters.findOne({ where: { OwnerId: player.sqlID } }).then((char) => {
-                player.characterId = parseInt(JSON.parse(JSON.stringify(char)).id);
-                player.sex = JSON.parse(JSON.stringify(char)).sex;
-                if (player.sex == 'female') {
-                    player.model = mp.joaat(['mp_f_freemode_01']);
-                } else {
-                    player.model = mp.joaat(['mp_m_freemode_01']);
-                }
-                mp.events.call('player:setMakeup', player);
-            }).catch((err) => {
-                mp.log(err);
-            });
-        }
-    }).catch((err) => {
-        mp.log(err);
-    });
-},
   'characterCreationFinish': async(player, data) => {
     var jsonOut = JSON.parse(data)
     player.characterName = JSON.parse(data).fName + '_' + JSON.parse(data).lName

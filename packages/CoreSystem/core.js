@@ -1928,31 +1928,6 @@ mp.cmds.add(["removealias", "removenick"], (player, target) => {
 								mp.log(err);
 							});
 					},
-					"player:setMakeup": async (player) => {
-						if (!player.characterId) return;
-						const { player_models } = require("../models");
-						player_models
-							.findAll({ where: { characterId: player.characterId } })
-							.then((model) => {
-								if (model.length > 0) {
-									var features = JSON.parse(model[0].data);
-									player.setVariable("modelData", features);
-									if (player.getVariable("devdebug") == true) {
-										player.outputChatBox(model[0].data);
-									}
-									mp.players.forEachInRange(
-										player.position,
-										200,
-										async (ps) => {
-											ps.call("updateMakeup", [player, features]);
-										}
-									);
-								}
-							})
-							.catch((err) => {
-								mp.log(err);
-							});
-					},
 				})
 			)
 		)
