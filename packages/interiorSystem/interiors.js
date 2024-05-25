@@ -55,34 +55,39 @@ mp.events.add('gir', async (player) => {
             return;
         }
 
-        const interiorFix = await db.InteriorFix.findOne({
-            where: {
-                ownerId: player.id,
-            },
-            order: [['createdAt', 'DESC']],
-        });
+        const interiorFixes = await db.InteriorFix.findAll();
 
-        if (interiorFix) {
-            const distance = Math.sqrt(
-                Math.pow(interiorFix.x - player.position.x, 2) +
-                Math.pow(interiorFix.y - player.position.y, 2) +
-                Math.pow(interiorFix.z - player.position.z, 2)
-            );
+        if (interiorFixes.length > 0) {
+            let allahbelaniziversin = null;
+            let tamammi = Number.MAX_VALUE;
 
-            if (distance <= 3) {
-                if (interiorFix.interiorType) {
-                    const interior = await db.Interior.findByPk(interiorFix.interiorType);
+            interiorFixes.forEach((interiorFix) => {
+                const distance = Math.sqrt(
+                    Math.pow(interiorFix.x - player.position.x, 2) +
+                    Math.pow(interiorFix.y - player.position.y, 2) +
+                    Math.pow(interiorFix.z - player.position.z, 2)
+                );
+
+                if (distance < tamammi) {
+                    tamammi = distance;
+                    allahbelaniziversin = interiorFix;
+                }
+            });
+
+            if (allahbelaniziversin && tamammi <= 10) {
+                if (allahbelaniziversin.interiorType) {
+                    const interior = await db.Interior.findByPk(allahbelaniziversin.interiorType);
                     if (interior) {
-                        player.dimension = interiorFix.dimension;
+                        player.dimension = allahbelaniziversin.dimension;
                         player.position = new mp.Vector3(interior.x, interior.y, interior.z);
                         return mp.chat.info(player, `Hoşgeldin.`);
                     } else {
                         return;
                     }
                 } else {
-                    player.dimension = interiorFix.dimension;
-                    player.position = new mp.Vector3(interiorFix.x, interiorFix.y, interiorFix.z);
-                    return mp.chat.info(player, `Hoşgeldin.}`);
+                    player.dimension = allahbelaniziversin.dimension;
+                    player.position = new mp.Vector3(allahbelaniziversin.x, allahbelaniziversin.y, allahbelaniziversin.z);
+                    return mp.chat.info(player, `Hoşgeldin.`);
                 }
             } else {
                 
@@ -94,12 +99,13 @@ mp.events.add('gir', async (player) => {
         enterCooldownMap.set(player, true);
         setTimeout(() => {
             enterCooldownMap.delete(player);
-        }, 1000);
+        }, 2000); 
     } catch (err) {
         console.error(err);
         return;
     }
 });
+
 
 mp.events.add('cik', async (player) => {
     try {
@@ -107,42 +113,65 @@ mp.events.add('cik', async (player) => {
             return;
         }
 
-        const interiorFix = await db.InteriorFix.findOne({
-            where: {
-                ownerId: player.id,
-            },
-            order: [['createdAt', 'DESC']],
-        });
+        const interiors = await db.Interior.findAll();
 
-        if (interiorFix) {
-            const interior = await db.Interior.findByPk(interiorFix.interiorType);
+        if (interiors.length > 0) {
+            //öyle tekrar tanımlayasım geldi.
+            //oyuncuları bu şekilde alıştıran kim varsa anasını sikeyim her seferinde db fetchliyorum amına koyim bu ne.
+            let allahbelaniziversin = null;
+            let tamammi = Number.MAX_VALUE;
 
-            if (interior) {
+            interiors.forEach((interior) => {
                 const distance = Math.sqrt(
                     Math.pow(interior.x - player.position.x, 2) +
                     Math.pow(interior.y - player.position.y, 2) +
                     Math.pow(interior.z - player.position.z, 2)
                 );
 
-                if (distance <= 3) {
-                    player.dimension = 0;
-                    player.position = new mp.Vector3(interiorFix.x, interiorFix.y, interiorFix.z);
-                    return mp.chat.info(player, `Görüşürüz, kendine iyi bak.`);
+                if (distance < tamammi) {
+                    tamammi = distance;
+                    allahbelaniziversin = interior;
+                }
+            });
+
+            if (allahbelaniziversin && tamammi <= 10) {
+                const interiorFix = await db.InteriorFix.findOne({
+                    where: {
+                        dimension: player.dimension,
+                    },
+                    order: [['createdAt', 'DESC']],
+                });
+
+                if (interiorFix) {
+                    const distance = Math.sqrt(
+                        Math.pow(allahbelaniziversin.x - player.position.x, 2) +
+                        Math.pow(allahbelaniziversin.y - player.position.y, 2) +
+                        Math.pow(allahbelaniziversin.z - player.position.z, 2)
+                    );
+
+                    if (distance <= 10 && player.dimension === interiorFix.dimension) {
+                        player.dimension = 0;
+                        player.position = new mp.Vector3(interiorFix.x, interiorFix.y, interiorFix.z);
+                        return mp.chat.info(player, `Görüşürüz, kendine iyi bak.`);
+                    } else {
+                       //uzaksa veya dimension tutmazsa.
+                    }
                 } else {
-                    
+                    //çıkılacak interior bulunamazsa
                 }
             } else {
-                
+                // çıkma noktasına çok uzaksa
             }
         } else {
-           
+            // interior hiç bulunamadıysa.
         }
 
         exitCooldownMap.set(player, true);
         setTimeout(() => {
             exitCooldownMap.delete(player);
-        }, 1000);
+        }, 2000);
     } catch (err) {
-        return;
+        
     }
 });
+
