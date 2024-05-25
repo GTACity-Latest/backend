@@ -77,6 +77,7 @@ class browserSystem {
                 location: '${zoneName.replace(`'`, '')}',
                 players: ${mp.players.length},
                 money: ${mp.players.local.getVariable('cashValue')},
+				zerobank: ${mp.players.local.getVariable('moneyValue')},
                 locationTwo: '${zoneTwo.replace(`'`, '')}',
                 direction: '${this.direction}',
                 fps: ${mp.players.local.frameRate ? mp.players.local.frameRate : '2000'}

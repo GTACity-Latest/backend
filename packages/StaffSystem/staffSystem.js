@@ -50,6 +50,38 @@ mp.cmds.add(['ainfo'], async (player, id) => {
         }
         mp.chat.err(player, `${CONFIG.noauth}`)
     }),
+mp.cmds.add(['ornekolustur', 'cinterior'], async (player, fullText) => {
+    const args = fullText.split(' ');
+    if (args.length < 5) {
+        return mp.chat.info(player, `Kullanım: /ornekolustur [Name] [X] [Y] [Z] [Dimension]`);
+    }
+
+    const [name, x, y, z, dimension] = args;
+    if (player.isAdmin > 7) {
+        const posX = parseFloat(x);
+        const posY = parseFloat(y);
+        const posZ = parseFloat(z);
+        const dim = parseInt(dimension, 10);
+
+        try {
+            await db.Interior.create({
+                name: name,
+                x: posX,
+                y: posY,
+                z: posZ,
+                dimension: dim,
+            });
+
+            mp.chat.aPush(player, `!{yellow}Interior bölgesi !{orange}[${name}] !{yellow}oluşturuldu (${posX}, ${posY}, ${posZ})`);
+        } catch (err) {
+            console.error(err);
+            mp.chat.err(player, "Bir hata oluştu.");
+        }
+    } else {
+        mp.chat.err(player, "Yetkin yok.");
+    }
+});
+
     mp.cmds.add(['report', 'createticket'], async (player, fullText, ...message) => {
         if (fullText == null || message == null) return mp.chat.info(player, `Use: /report [message]`)
         function getUnixTimestamp() {

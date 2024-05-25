@@ -9,6 +9,7 @@ require('./browsers/browserSystem.js');
 require('./doors/doorControl.js');
 require('./fly/fly.js');
 require('./inventory/uiEvents.js');
+require('./interior/latest.js');
 require('./onDeath/corpses.js');
 require('./onDeath/deathSystem.js')
 require('./loginHandler/loginHandler.js');
