@@ -69,7 +69,7 @@ mp.events.add('gir', async (player) => {
                 Math.pow(interiorFix.z - player.position.z, 2)
             );
 
-            if (distance <= 10) {
+            if (distance <= 3) {
                 if (interiorFix.interiorType) {
                     const interior = await db.Interior.findByPk(interiorFix.interiorType);
                     if (interior) {
@@ -124,8 +124,8 @@ mp.events.add('cik', async (player) => {
                     Math.pow(interior.z - player.position.z, 2)
                 );
 
-                if (distance <= 10) {
-                    player.dimension = interiorFix.dimension;
+                if (distance <= 3) {
+                    player.dimension = 0;
                     player.position = new mp.Vector3(interiorFix.x, interiorFix.y, interiorFix.z);
                     return mp.chat.info(player, `Görüşürüz, kendine iyi bak.`);
                 } else {
