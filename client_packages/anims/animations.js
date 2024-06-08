@@ -275,7 +275,7 @@ mp.events.addDataHandler("isCrouched", (entity, value) => {
 });
 
 // CAPS key to toggle crouching
-mp.keys.bind(223, false, () => {
+mp.keys.bind(162, false, () => {
     if(mp.players.local.isTypingInTextChat) return;
     mp.events.callRemote("toggleCrouch");
 });

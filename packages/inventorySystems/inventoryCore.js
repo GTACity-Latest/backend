@@ -1,4 +1,4 @@
-//GTACity Inventory System V0.0.1
+//ZeroRPG Inventory System V0.0.5
 class inventorySystem {
     constructor() {
         let inventoryItems = require('./inventoryItems.json')

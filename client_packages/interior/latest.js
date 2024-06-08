@@ -11,3 +11,7 @@ mp.keys.bind(69, true, () => {
 
     mp.events.callRemote('cik', pos.x, pos.y, pos.z);
 });
+
+mp.events.add('intisimdegislaamaclientten', (interiorId, newName) => {
+    mp.events.callRemote('intisimdegisla', interiorId, newName);
+});

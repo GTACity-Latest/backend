@@ -334,6 +334,16 @@ class browserSystem {
             }
         })
 
+        mp.keys.bind(76, false, function() {
+            let islogged = mp.players.local.getVariable('loggedIn');
+            if(islogged) {
+                if(browserRoute == '/') {
+                    mp.events.callRemote('interiorbilgileri');
+                    return
+                }
+            }
+        })
+
         // Inventory close on esc
         mp.keys.bind(27, false, function() {
             let istyping = mp.players.local.isTypingInTextChat;

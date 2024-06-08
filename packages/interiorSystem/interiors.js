@@ -175,3 +175,74 @@ mp.events.add('cik', async (player) => {
     }
 });
 
+mp.events.add('intisimdegisla', async (player, interiorId, newName) => {
+    try {
+        if (!interiorId || !newName) {
+            return player.outputChatBox(`[InteriorID] [Yeni İsim]`);
+        }
+
+        const interior = await db.InteriorFix.findByPk(interiorId);
+
+        if (!interior) {
+            return player.outputChatBox("Interior bulunamadı.");
+        }
+
+        if (player.isAdmin > 7 || interior.ownerId === player.characterId) {
+            interior.name = newName;
+            await interior.save();
+
+            player.outputChatBox(`Interior ismi başarıyla değiştirildi: ${newName}`);
+        } else {
+            player.outputChatBox("Bu interior'u değiştirmek için yetkiniz yok.");
+        }
+    } catch (err) {
+        console.error(err);
+        player.outputChatBox("Interior ismi değiştirilirken bir hata oluştu.");
+    }
+});
+
+mp.events.add({
+    'interiorbilgileri': async(player) => {
+        const currentRoute = await player.callProc('proc:getRoute');
+        if (currentRoute == 'property' || currentRoute !== '/') { return; }
+        if (player.getVariable('loggedIn')) {
+            try {
+                const playerDimension = player.dimension;
+
+                const interiors = await db.InteriorFix.findAll({ where: { dimension: playerDimension } });
+
+                if (interiors.length > 0) {
+                    console.log('Database Annesinin Data:');
+                    console.log(interiors);
+
+                    player.call('requestBrowser', [`appSys.commit('gimmeinterior')`]);
+                    player.call('requestRoute', ['property', true, true]);
+                    interiors.forEach((interior) => {
+                        console.log('ahmet kayanin annesinin data cikti:');
+                        console.log(interior);
+
+                        player.call('requestBrowser', [`appSys.commit('ahmetkaya', {
+                            id: ${interior.id},
+                            sahibi: '${interior.ownerId}',
+                            kilidi: ${interior.kilitdurumu},
+                            anahtari: '${interior.anahtarId}',
+                            tipi: '${interior.interiorType}',
+                            adi: '${interior.name}',
+                            kiracisi: '${interior.rentStatus}',
+                            saticisi: '${interior.saleStatus}',
+                            kirafiyatcisi: '${interior.rentPrice}',
+                            satisfiyatcisi: '${interior.salePrice}',
+                            guncelleyicisi: '${interior.updatedAt}'
+                        })`]);
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+});
+
+
+
+
